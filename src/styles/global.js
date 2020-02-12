@@ -18,8 +18,8 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased !important;
     font-family: proxima-nova, sans-serif;
     background: #181818;
-    font-family: 'Montserrat', sans-serif;
     color: #ffffff;
+    user-select: none;
   }  
   
 `

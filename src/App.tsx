@@ -1,3 +1,4 @@
+// @ts-nocheck
 import './config/ReactotronConfig'
 
 import React from 'react'
@@ -20,9 +21,23 @@ const snackbarProviderOptions = {
 
 const theme = createMuiTheme({
   palette: {
+    type: 'dark',
     primary: green,
     secondary: red,
-    error: red
+    error: red,
+    background: {
+      paper: '#282828'
+    },
+    action: {
+      hover: '#404040'
+    },
+    divider: '#404040'
+  },
+  typography: {
+    fontFamily: [
+      'proxima-nova',
+      'Montserrat'
+    ]
   }
 })
 
