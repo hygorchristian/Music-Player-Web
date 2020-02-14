@@ -15,10 +15,9 @@ export const Container = styled.div`
   .bottom{
     display: flex;
   }
-`;
+`
 
 export const Content = styled.section`
   display: flex;
   flex: 1;
-`;
-
+`
