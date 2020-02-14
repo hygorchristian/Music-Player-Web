@@ -8,6 +8,7 @@ import { SnackbarProvider } from 'notistack'
 import { PersistGate } from 'redux-persist/integration/react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { green, red } from '@material-ui/core/colors'
+import Main from '~/screens/Main'
 
 import { store, persistor } from './store'
 import Routes from './routes'
@@ -50,7 +51,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <BrowserRouter>
               <Notifier />
-              <Routes />
+              <Main />
             </BrowserRouter>
           </ThemeProvider>
         </SnackbarProvider>
