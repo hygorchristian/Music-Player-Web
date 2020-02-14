@@ -1,9 +1,13 @@
 // @ts-nocheck
-import React, { MouseEvent, useState } from 'react'
+import React, { useState } from 'react'
 
-import { Container } from './styles'
+import { Container, Controls, ThumbButton, Slider, SideControls, Button } from './styles'
 import MenuAuthor from '~/components/MenuAuthor'
 import MenuTitle from '~/components/MenuTitle'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppActions } from '~/store/ducks/app'
+import { ExpandLess } from '@material-ui/icons'
+import { ReactSVG } from 'react-svg'
 
 interface HandleMenuInterface {
   currentTarget: HTMLDivElement
@@ -18,6 +22,13 @@ function Playbar (props: PlaybarProps) {
   const [titleMenuPos, setTitleMenuPos] = useState({ top: 0, left: 0 })
   const [authorMenuOpen, setAuthorMenuOpen] = useState(false)
   const [authorMenuPos, setAuthorMenuPos] = useState({ top: 0, left: 0 })
+  const dispatch = useDispatch()
+
+  const { thumbInBottom } = useSelector(({ app }) => app)
+
+  const toggleThumb = () => {
+    dispatch(AppActions.toggleThumb())
+  }
 
   const handleContextMenu = (event: MouseEvent) => {
     event && event.preventDefault()
@@ -58,28 +69,53 @@ function Playbar (props: PlaybarProps) {
     <>
       <Container onContextMenu={handleContextMenu}>
         <div className="music">
-          <img/>
-          <div className="music-info">
+          <div className={`thumbnail ${!thumbInBottom && 'hide'}`}>
+            <img src="/img/mock/cover_1.jpg" alt="cover"/>
+            <ThumbButton size="small" color="primary" onClick={toggleThumb}>
+              <ExpandLess style={{ fontSize: 14 }} />
+            </ThumbButton>
+          </div>
+          <div className={`music-info ${!thumbInBottom && 'hide'}`}>
             <div className="music-title">
               <div className="title" onContextMenu={openTitleMenu}>
                 <span>Trashed and Scattered</span>
               </div>
-              {/* <Icon /> */}
             </div>
             <div className="author-name" onContextMenu={openAuthorMenu}>
               <span>Avenged Sevenfold</span>
             </div>
           </div>
         </div>
-        {/* <Controls /> */}
-        {/* <SideControls /> */}
+        <Controls>
+          <div className="buttons">
+            <Button>
+              <ReactSVG className="control-icon" src="/icons/shuffle.svg" />
+            </Button>
+            <Button>
+              <ReactSVG className="control-icon" src="/icons/skip-previous.svg" />
+            </Button>
+            <Button className="large">
+              <ReactSVG className="control-icon large" src="/icons/play-circle-outline.svg" />
+            </Button>
+            <Button>
+              <ReactSVG className="control-icon" src="/icons/skip-next.svg" />
+            </Button>
+            <Button>
+              <ReactSVG className="control-icon" src="/icons/repeat.svg" />
+            </Button>
+          </div>
+          <div className="progress-slider">
+            <Slider id="slider-irado" value={10} />
+          </div>
+        </Controls>
+        <SideControls />
       </Container>
       <MenuAuthor
         open={authorMenuOpen}
         position={authorMenuPos}
         onClickAway={handleClickAway}
-        onContext={() => {
-          handleContextMenu()
+        onContext={(e) => {
+          handleContextMenu(e)
           handleClickAway()
         }}
       />
@@ -87,8 +123,8 @@ function Playbar (props: PlaybarProps) {
         open={titleMenuOpen}
         position={titleMenuPos}
         onClickAway={handleClickAway}
-        onContext={() => {
-          handleContextMenu()
+        onContext={(e) => {
+          handleContextMenu(e)
           handleClickAway()
         }}
       />
