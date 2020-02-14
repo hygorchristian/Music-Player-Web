@@ -3,6 +3,7 @@ import React from 'react'
 import Navbar from '~/components/Navbar'
 import Playbar from '~/components/Playbar'
 import FindFriends from '~/components/FindFriends'
+import Routes from '~/routes'
 
 import { Container, Content } from './styles'
 
@@ -16,7 +17,7 @@ function Main (props: MainProps) {
       <div className="top">
         <Navbar/>
         <Content>
-          hell
+          <Routes />
         </Content>
         <FindFriends/>
       </div>
