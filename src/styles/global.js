@@ -22,4 +22,13 @@ export default createGlobalStyle`
     user-select: none;
   }  
   
+  button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+  }
+  
 `
