@@ -27,7 +27,14 @@ function Home (props: HomeProps) {
 
   return (
     <Container>
-      <Header />
+      <Header height={240}>
+        <div className="head">
+          <h1>Home</h1>
+        </div>
+        <div className="subhead">
+          <h2>Home</h2>
+        </div>
+      </Header>
       {headerFixed && <div className="extra-size" />}
       <HorizontalScroll
         title="Recently played"

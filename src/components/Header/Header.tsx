@@ -15,8 +15,6 @@ function Search (props) {
   const { width } = useWindowSize()
   const { isTablet } = useTabletMode()
 
-  console.log({ width })
-
   const [value, setValue] = useState('')
   const [headerWidth, setHeaderWidth] = useState(width - 456)
 
@@ -31,7 +29,7 @@ function Search (props) {
   }, [width])
 
   return (
-    <SearchContainer {...props} width={headerWidth}>
+    <SearchContainer width={headerWidth} {...props} >
       <div className="search-control">
         <button style={{ marginRight: 8 }}>
           <ReactSVG src="/icons/spotify/chevron-left.svg" />
@@ -68,7 +66,7 @@ function Search (props) {
   )
 }
 
-function Header (props: HeaderProps) {
+function Header ({ children, ...props }: HeaderProps) {
   const dispatch = useDispatch()
 
   const { scrollTop, headerFixed } = useSelector(({ app }) => app)
@@ -88,15 +86,16 @@ function Header (props: HeaderProps) {
       ref={containerEl}
       fixed={headerFixed}
       overlay={scrollTop > 90 ? 1 : scrollTop / 90}
+      {...props}
     >
       <div className="gradient" />
       <div className="overlay" />
       <div className="content">
         <div className={`header-info ${headerFixed && 'fixed'}`}>
-          <h3>Home</h3>
+          {children[0]}
         </div>
         <div className={`subheader-info ${headerFixed && 'fixed'}`}>
-          <h4>Home</h4>
+          {children[1]}
         </div>
       </div>
       <Search bgOpacity={scrollTop > 80 ? 1 : 0} />

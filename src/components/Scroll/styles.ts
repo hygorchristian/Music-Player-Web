@@ -17,6 +17,7 @@ export const Track = styled.div`
   height: 100%;
   right: 0;
   background-color: #181818;
+  z-index: 1500;
 `
 
 export const Thumb = styled.div`

@@ -5,8 +5,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: ${({ fixed }) => fixed ? 116 : 240}px;
+  width: calc(100vw - 456px);
+  height: ${({ height, fixed }) => fixed ? 116 : height}px;
   max-height: ${({ fixed }) => fixed ? 116 : 1000}px;
   position: ${({ fixed }) => fixed ? 'fixed' : 'relative'}; 
   border-bottom:${({ fixed }) => fixed ? '1px solid #282828' : 'none'};
@@ -47,15 +47,12 @@ export const Container = styled.div`
       display: flex;
       padding-left: 32px;
       transition: all 200ms ease-in-out;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
       
       &.fixed{
-        bottom: 300px;
-      }
-      
-      h3{
-        font-size: 48px;
-        font-weight: 800;
-        margin-bottom: 40px;
+        bottom: 500px;
       }
     }
     
@@ -64,15 +61,11 @@ export const Container = styled.div`
       bottom: -100px;
       padding-left: 32px;
       transition: all 150ms ease-in-out;
+      width: 100%;
+      display: flex;
       
       &.fixed{
         bottom: 0;
-      }
-      
-      h4{
-        font-size: 28px;
-        font-weight: 800;
-        margin-bottom: 18px;
       }
     }
   }

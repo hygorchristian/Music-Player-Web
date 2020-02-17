@@ -8,6 +8,30 @@ export const Container = styled(Scroll)`
   position: relative;
   overflow: hidden;
   
+  .head{
+    display: flex;
+    flex-direction: column;
+    height: 240px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    
+    h1{
+      font-size: 48px;
+      margin-bottom: 52px;
+    }
+  }
+  
+  .subhead{
+    height: 68px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    h2{
+      font-size: 28px;
+    }
+  }
+  
   .fake-content{
     height: 300vh;
     padding-top: ${({ fixed }) => fixed ? 240 : 0}px;
@@ -24,8 +48,6 @@ export const Container = styled(Scroll)`
   
   .scroll{
     width: 100%;
-    background-color: red;
     margin: 0 32px;
   }
-`;
-
+`
