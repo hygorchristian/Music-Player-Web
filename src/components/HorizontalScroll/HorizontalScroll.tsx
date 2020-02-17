@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { Container, Carousel } from './styles'
 import { ReactSVG } from 'react-svg'
@@ -36,6 +36,15 @@ function getItemWidth (width: Number) {
 function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
   const { width } = useWindowSize()
   const [itemSize, setItemSize] = useState(getItemWidth(width))
+  const carousel = useRef(null)
+
+  const onNext = () => {
+    carousel.current.next()
+  }
+
+  const onPrev = () => {
+    carousel.current.previous()
+  }
 
   useEffect(() => {
     setItemSize(getItemWidth(width))
@@ -46,15 +55,15 @@ function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
       <div className="header">
         <h2>{title}</h2>
         <div className="controls">
-          <button>
+          <button onClick={onPrev}>
             <ReactSVG src="/icons/spotify/chevron-left.svg" />
           </button>
-          <button>
+          <button onClick={onNext}>
             <ReactSVG src="/icons/spotify/chevron-right.svg" />
           </button>
         </div>
       </div>
-      <Carousel itemSize={itemSize}>
+      <Carousel ref={carousel} itemSize={itemSize}>
         {items.map(item => (
           <div className="item">
             <img/>
