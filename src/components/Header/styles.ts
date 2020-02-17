@@ -10,6 +10,7 @@ export const Container = styled.div`
   max-height: ${({ fixed }) => fixed ? 116 : 1000}px;
   position: ${({ fixed }) => fixed ? 'fixed' : 'relative'}; 
   border-bottom:${({ fixed }) => fixed ? '1px solid #282828' : 'none'};
+  z-index: 1000;
   
   .overlay{
     height: 100%;

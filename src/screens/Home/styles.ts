@@ -21,5 +21,11 @@ export const Container = styled(Scroll)`
     display: block;
     height: 240px;
   }
+  
+  .scroll{
+    width: 100%;
+    background-color: red;
+    margin: 0 32px;
+  }
 `;
 

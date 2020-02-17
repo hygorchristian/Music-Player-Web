@@ -6,10 +6,21 @@ import Header from '~/components/Header'
 import { Container } from './styles'
 import { lorem } from '~/utils/dev'
 import { useSelector } from 'react-redux'
+import HorizontalScroll from '~/components/HorizontalScroll'
 
 type HomeProps = {
 
 }
+
+const recently = [
+  {
+    id: 1,
+    type: 'album',
+    cover: 'sds',
+    title: 'Hydrograd',
+    description: 'Dragonfucking'
+  }
+]
 
 function Home (props: HomeProps) {
   const { headerFixed } = useSelector(({ app }) => app)
@@ -18,12 +29,18 @@ function Home (props: HomeProps) {
     <Container>
       <Header />
       {headerFixed && <div className="extra-size" />}
-      <div className="fake-content">
-        <p style={{ color: '#ffa5a5' }}>{lorem.large}</p>
-        <p style={{ color: '#ffdb9a' }}>{lorem.large}</p>
-        <p style={{ color: '#abff94' }}>{lorem.large}</p>
-        <p style={{ color: '#a3e0ff' }}>{lorem.large}</p>
-      </div>
+      <HorizontalScroll
+        title="Recently played"
+        data={recently}
+      />
+      <HorizontalScroll
+        title="Similar to Nerdcast"
+        data={recently}
+      />
+      <HorizontalScroll
+        title="Jump back in"
+        data={recently}
+      />
     </Container>
   )
 }
