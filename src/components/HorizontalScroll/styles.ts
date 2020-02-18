@@ -32,6 +32,8 @@ export const Container = styled.div`
   align-items: flex-start;
   padding: 10px 32px;
   position: relative;
+  width: ${({ width }) => width}px;
+  overflow-x: hidden;
   
   .header{
     border-bottom: 1px solid #282828;

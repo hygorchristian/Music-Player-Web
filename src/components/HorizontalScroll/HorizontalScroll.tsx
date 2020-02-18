@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import { Container, Carousel } from './styles'
 import { ReactSVG } from 'react-svg'
-import { useWindowSize } from '~/hooks'
+import { useTabletMode, useWindowSize } from '~/hooks'
 
 type HorizontalScrollProps = {
   title: String,
@@ -35,7 +35,9 @@ function getItemWidth (width: Number) {
 
 function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
   const { width } = useWindowSize()
+  const { isTablet } = useTabletMode()
   const [itemSize, setItemSize] = useState(getItemWidth(width))
+  const [containerWidth, setContainerWidth] = useState(isTablet ? width - 200 : width - 456)
   const carousel = useRef(null)
 
   const onNext = () => {
@@ -48,10 +50,11 @@ function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
 
   useEffect(() => {
     setItemSize(getItemWidth(width))
+    setContainerWidth(isTablet ? width - 200 : width - 456)
   }, [width])
 
   return (
-    <Container>
+    <Container width={containerWidth}>
       <div className="header">
         <h2>{title}</h2>
         <div className="controls">
