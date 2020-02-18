@@ -45,7 +45,7 @@ export const Container = styled.div`
     
     h2{
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 18px;
     }
     
@@ -125,13 +125,19 @@ export const Carousel = styled(_Carousel).attrs({
     }
     
     h4{
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 800;
       margin-top: 12px;
+      line-height: 16spx;
+      cursor: pointer;
+      
+      &:hover{
+        text-decoration: underline;
+      }
     }
     
     p{
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: #B3B3B3;
       margin-top: 8px;
