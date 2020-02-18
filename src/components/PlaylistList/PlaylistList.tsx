@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { Container, ItemContainer } from './styles'
 import MenuPlaylist from '~/components/MenuPlaylist'
@@ -36,11 +37,13 @@ function PlaylistList (props: PlaylistListProps) {
   const [playlistMenuOpen, setPlaylistMenuOpen] = useState(false)
   const [playlistMenuPos, setPlaylistMenuPos] = useState({ top: 0, left: 0 })
 
+  const history = useHistory()
   const dispatch = useDispatch()
   const { menuSelected } = useSelector(({ app }) => app)
 
   const selectMenu = (name) => {
     dispatch(AppActions.setMenuSelected(name))
+    history.push(`/playlist/${name}`)
   }
 
   const handleContextMenu = (e: MouseEvent) => {

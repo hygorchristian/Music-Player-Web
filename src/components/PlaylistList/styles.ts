@@ -40,7 +40,7 @@ export const ItemContainer = styled.li`
   }
   
   span{
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: #b2b2b2;
   }     
