@@ -5,7 +5,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100vw - 456px);
+  width: ${({ isTablet }) => isTablet ? 'calc(100vw - 200px)' : 'calc(100vw - 456px)'};
   height: ${({ height, fixed }) => fixed ? 116 : height}px;
   max-height: ${({ fixed }) => fixed ? 116 : 1000}px;
   position: ${({ fixed }) => fixed ? 'fixed' : 'relative'}; 

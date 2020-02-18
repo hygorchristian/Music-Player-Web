@@ -16,7 +16,7 @@ function Search (props) {
   const { isTablet } = useTabletMode()
 
   const [value, setValue] = useState('')
-  const [headerWidth, setHeaderWidth] = useState(width - 456)
+  const [headerWidth, setHeaderWidth] = useState(isTablet ? width - 200 : width - 456)
 
   const handleChange = (e: React.ChangeEvent) => {
     const newValue = e.target.value
@@ -70,6 +70,7 @@ function Header ({ children, ...props }: HeaderProps) {
   const dispatch = useDispatch()
 
   const { scrollTop, headerFixed } = useSelector(({ app }) => app)
+  const { isTablet } = useTabletMode()
   const [bottom, setBottom] = useState(500)
 
   const containerEl = useRef(null)
@@ -86,6 +87,7 @@ function Header ({ children, ...props }: HeaderProps) {
       ref={containerEl}
       fixed={headerFixed}
       overlay={scrollTop > 90 ? 1 : scrollTop / 90}
+      isTablet={isTablet}
       {...props}
     >
       <div className="gradient" />
@@ -98,7 +100,10 @@ function Header ({ children, ...props }: HeaderProps) {
           {children[1]}
         </div>
       </div>
-      <Search bgOpacity={scrollTop > 80 ? 1 : 0} />
+      <Search
+        isTablet={isTablet}
+        bgOpacity={scrollTop > 80 ? 1 : 0}
+      />
     </Container>
   )
 }

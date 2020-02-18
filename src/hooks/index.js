@@ -31,8 +31,8 @@ export function useScrollProps () {
 }
 
 export function useTabletMode () {
-  const [props, setProps] = useState({ isTablet: false })
   const { width } = useWindowSize()
+  const [props, setProps] = useState({ isTablet: width < 1190 })
 
   useEffect(() => {
     setProps({ isTablet: width < 1190 })
