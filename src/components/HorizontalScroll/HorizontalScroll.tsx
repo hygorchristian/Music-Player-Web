@@ -1,10 +1,11 @@
 // @ts-nocheck
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, memo } from 'react'
 
 import { Container, Carousel } from './styles'
 import { ReactSVG } from 'react-svg'
 import { useTabletMode, useWindowSize } from '~/hooks'
+import Spoticon from '~/components/Spoticon/Spoticon'
 
 type HorizontalScrollProps = {
   title: String,
@@ -59,10 +60,12 @@ function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
         <h2>{title}</h2>
         <div className="controls">
           <button onClick={onPrev}>
-            <ReactSVG src="/icons/spotify/chevron-left.svg" />
+            <Spoticon name="chevron-left-solid" color="white" size={18} />
+            {/* <ReactSVG src="/icons/spotify/chevron-left.svg" /> */}
           </button>
           <button onClick={onNext}>
-            <ReactSVG src="/icons/spotify/chevron-right.svg" />
+            <Spoticon name="chevron-right-solid" color="white" size={18} />
+            {/* <ReactSVG src="/icons/spotify/chevron-right.svg" /> */}
           </button>
         </div>
       </div>
@@ -80,4 +83,4 @@ function HorizontalScroll ({ title, data }: HorizontalScrollProps) {
   )
 }
 
-export default HorizontalScroll
+export default memo(HorizontalScroll)

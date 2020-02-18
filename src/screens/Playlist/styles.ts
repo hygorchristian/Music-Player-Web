@@ -20,6 +20,37 @@ export const Container = styled(Scroll)`
       height: 220px;
       width: 220px;
       background-color: white;
+      position: relative;
+      cursor: pointer;
+      
+      &:hover{
+        .overlay{
+          opacity: 1;
+        }
+      }
+      
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 10;
+      }
+      
+      .overlay{   
+        opacity: 0;   
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0,0,0,0.7);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 90;
+      }
+      
     }
     
     .info{

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react'
+import React, { memo } from 'react'
 import { ReactSVG } from 'react-svg'
 
 import { Container, Scroll, Thumb } from './styles'
@@ -74,7 +74,7 @@ function Navbar (props: NavbarProps) {
         <span>New Playlist</span>
       </div>
       <div className={`thumbnail ${thumbInBottom && 'hide'}`}>
-        <img src="/img/mock/cover_1.jpg"/>
+        <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg"/>
         <ThumbButton size="small" color="primary" onClick={toggleThumb}>
           <ExpandMore style={{ fontSize: 14 }} />
         </ThumbButton>
@@ -83,4 +83,4 @@ function Navbar (props: NavbarProps) {
   )
 }
 
-export default Navbar
+export default memo(Navbar)

@@ -64,15 +64,9 @@ export const Container = styled.div`
         margin-left: 8px;
         
         &:active{
-          svg{
-            stroke: #A8A8A8;
+          i{
+            color: #A8A8A8;
           }
-        }
-        
-        svg{
-          height: 16px;
-          width: 16px;
-          stroke: white;
         }
       }
     }

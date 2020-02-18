@@ -103,6 +103,7 @@ export const Container = styled.div`
         display: flex;
         flex-direction: row;
         margin-bottom: 4px;
+        align-items: center;
         
         .title{
           cursor: pointer; 
@@ -118,6 +119,25 @@ export const Container = styled.div`
               border-bottom: 1px solid #ffffff;
             }
           }  
+        }
+        
+        button{
+          width: 16px;
+          height: 16px;
+          margin-left: 14px;
+          
+          i{
+            color: #A4A4A4;
+          }
+          
+          &:hover *{
+            color: #ffffff;
+          }
+          
+          &:active *{
+            color: #A4A4A4;
+          }
+          
         }
       }
       
@@ -150,7 +170,7 @@ export const Controls = styled.div`
   flex: 1;
   
   .progress-slider{
-    width: 500px;
+    width: 85%;
     margin: 0;
     
     .MuiSlider-root{
@@ -177,6 +197,63 @@ export const Controls = styled.div`
 
 export const SideControls = styled.div`
   width: 275px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 24px;
+  
+  button{
+    height: 24px;
+    width: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover{
+      i{
+        color: #ffffff;
+      }
+    }
+    
+    &:active{
+      i{
+        color: #B3B3B3;
+      }
+    }
+    
+    i{
+      color: #B3B3B3;
+    }
+  }
+  
+  .volume-slider{
+    width: 85px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 3px;
+    margin-left: 3px;
+    margin-right: 13px;
+    
+    
+    .MuiSlider-root{
+      .MuiSlider-thumb {
+        display: none !important;
+      }
+    
+      &:hover .MuiSlider-track{
+        background-color: #1EB954 !important;
+      }
+      
+      &:hover .MuiSlider-thumb {
+        display: block !important;
+      }
+    }
+  }
 `
 
 export const ThumbButton = styled(IconButton)`
@@ -196,33 +273,63 @@ export const Button = styled.button`
   border-radius: 50%;
   background-color: transparent;
   border: none;
-  transition: all 200ms ease-in-out;
   margin: 0 6px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   
   &:hover *{
-    fill: #ffffff;
+    color: #ffffff;
+  }
+  
+  &:active *{
+    color: #b3b3b3;
   }
   
   &.large{
     height: 42px;
     width: 42px;
-  }
-  
-  .control-icon{
-    &.large{
-      svg{
-        height: 40px;
-        width: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover{
+      transform: scale(1.05);
+      
+      .control{
+        border-color: #ffffff;
       }
     }
+    
+    &:active{
+      & *{        
+        color: #B3B3B3;
+      }
+    
+      color: #B3B3B3;
+      transform: scale(1);
+      
+      .control{
+        border-color: #B3B3B3;
+      }
+    }
+    
+    .control{
+      height: 34px;
+      width: 34px;
+      border-radius: 50%;
+      border: 1px solid #B3B3B3;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+  }
   
-    svg{
-      height: 20px;
-      width: 20px;
-      fill: #B3B3B3;
+  .control-icon{  
+    i{
+      color: #B3B3B3;
     }
   }
 `

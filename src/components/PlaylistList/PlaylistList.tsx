@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { Container, ItemContainer } from './styles'
@@ -131,4 +131,4 @@ function PlaylistList (props: PlaylistListProps) {
   )
 }
 
-export default PlaylistList
+export default memo(PlaylistList)

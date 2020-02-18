@@ -1,6 +1,7 @@
 // @ts-nocheck
 
-import React from 'react'
+import React, { memo } from 'react'
+import './styles.css'
 
 import { Container } from './styles'
 
@@ -11,10 +12,10 @@ type SpoticonProps = {
   hover: Boolean
 }
 
-function Spoticon ({ name, color, size, hover }: SpoticonProps) {
+function Spoticon ({ name, color = '#ccc', size = 14, hover = false }: SpoticonProps) {
   return (
     <Container
-      className={hover ? `${name}-bold` : name}
+      className={hover ? `spoticon ${name}-bold` : `spoticon ${name}`}
       color={color}
       size={size}
       hover={hover}
@@ -22,4 +23,4 @@ function Spoticon ({ name, color, size, hover }: SpoticonProps) {
   )
 }
 
-export default Spoticon
+export default memo(Spoticon)

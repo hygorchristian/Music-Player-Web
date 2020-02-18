@@ -1,28 +1,25 @@
 // @ts-nocheck
-import React, { useState } from 'react'
-
+import React, { useState, memo } from 'react'
 import { Container, Controls, ThumbButton, Slider, SideControls, Button } from './styles'
 import MenuAuthor from '~/components/MenuAuthor'
 import MenuTitle from '~/components/MenuTitle'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppActions } from '~/store/ducks/app'
 import { ExpandLess } from '@material-ui/icons'
-import { ReactSVG } from 'react-svg'
-
-interface HandleMenuInterface {
-  currentTarget: HTMLDivElement
-}
+import Spoticon from '~/components/Spoticon/Spoticon'
 
 type PlaybarProps = {
 
 }
 
+const SM_ICON = 16
+
 function Playbar (props: PlaybarProps) {
+  const dispatch = useDispatch()
   const [titleMenuOpen, setTitleMenuOpen] = useState(false)
   const [titleMenuPos, setTitleMenuPos] = useState({ top: 0, left: 0 })
   const [authorMenuOpen, setAuthorMenuOpen] = useState(false)
   const [authorMenuPos, setAuthorMenuPos] = useState({ top: 0, left: 0 })
-  const dispatch = useDispatch()
 
   const { thumbInBottom } = useSelector(({ app }) => app)
 
@@ -70,7 +67,7 @@ function Playbar (props: PlaybarProps) {
       <Container onContextMenu={handleContextMenu}>
         <div className="music">
           <div className={`thumbnail ${!thumbInBottom && 'hide'}`}>
-            <img src="/img/mock/cover_1.jpg" alt="cover"/>
+            <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg" alt="cover"/>
             <ThumbButton size="small" color="primary" onClick={toggleThumb}>
               <ExpandLess style={{ fontSize: 14 }} />
             </ThumbButton>
@@ -78,37 +75,58 @@ function Playbar (props: PlaybarProps) {
           <div className={`music-info ${!thumbInBottom && 'hide'}`}>
             <div className="music-title">
               <div className="title" onContextMenu={openTitleMenu}>
-                <span>Trashed and Scattered</span>
+                <span>Nikita</span>
               </div>
+              <button>
+                <Spoticon name="heart" size={16} />
+              </button>
             </div>
             <div className="author-name" onContextMenu={openAuthorMenu}>
-              <span>Avenged Sevenfold</span>
+              <span>Elton John</span>
             </div>
           </div>
         </div>
         <Controls>
           <div className="buttons">
             <Button>
-              <ReactSVG className="control-icon" src="/icons/shuffle.svg" />
+              <Spoticon name="shuffle" size={SM_ICON} />
             </Button>
             <Button>
-              <ReactSVG className="control-icon" src="/icons/skip-previous.svg" />
+              <Spoticon name="prev" size={SM_ICON} />
             </Button>
             <Button className="large">
-              <ReactSVG className="control-icon large" src="/icons/play-circle-outline.svg" />
+              <div className="control">
+                <Spoticon name="play" size={SM_ICON} />
+              </div>
             </Button>
             <Button>
-              <ReactSVG className="control-icon" src="/icons/skip-next.svg" />
+              <Spoticon name="next" size={SM_ICON} />
             </Button>
             <Button>
-              <ReactSVG className="control-icon" src="/icons/repeat.svg" />
+              <Spoticon name="repeat" size={SM_ICON} />
             </Button>
           </div>
           <div className="progress-slider">
             <Slider id="slider-irado" value={10} />
           </div>
         </Controls>
-        <SideControls />
+        <SideControls>
+          <button>
+            <Spoticon name="playlist" size={16} />
+          </button>
+          <button style={{ marginLeft: 16 }}>
+            <Spoticon name="devices" size={16} />
+          </button>
+          <button style={{ marginLeft: 16 }}>
+            <Spoticon name="volume-high" size={16} />
+          </button>
+          <div className="volume-slider" size={16}>
+            <Slider value={50} />
+          </div>
+          <button>
+            <Spoticon name="expand" size={16} />
+          </button>
+        </SideControls>
       </Container>
       <MenuAuthor
         open={authorMenuOpen}
@@ -132,4 +150,4 @@ function Playbar (props: PlaybarProps) {
   )
 }
 
-export default Playbar
+export default memo(Playbar)

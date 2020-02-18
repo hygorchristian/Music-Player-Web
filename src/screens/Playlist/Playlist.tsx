@@ -2,13 +2,12 @@
 
 import React from 'react'
 import Header from '~/components/Header'
-import { MoreHoriz } from '@material-ui/icons'
+import { MoreHoriz, Edit } from '@material-ui/icons'
 
 import { Container } from './styles'
 import { useSelector } from 'react-redux'
 import Table from '~/components/Table'
 import SearchBar from '~/components/SearchBar'
-import { ReactSVG } from 'react-svg'
 
 type HomeProps = {
 
@@ -22,11 +21,14 @@ function Playlist (props: HomeProps) {
       <Header height={308}>
         <div className="head">
           <div className="cover">
-            <ReactSVG />
+            <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg" />
+            <div className="overlay">
+              <Edit size={32} style={{ color: 'white' }} />
+            </div>
           </div>
           <div className="info">
             <div className="label">Playlist</div>
-            <h2 className="title">Dragonfucking</h2>
+            <h2 className="title">Rocketman</h2>
             <p className="text">
               Created by <a>rushy06</a> • 29 songs, 2hr 2 min
             </p>
@@ -43,9 +45,9 @@ function Playlist (props: HomeProps) {
         <div className="subhead">
           <div className="info">
             <div className="cover">
-              <img />
+              <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg" />
             </div>
-            <h2 className="title">Dragonfucking</h2>
+            <h2 className="title">Rocketman</h2>
           </div>
           <div className="controls">
             <button className="play">

@@ -42,6 +42,11 @@ export const Container = styled.li`
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    i{
+      color: white;
+      font-size: 24px;
+    }
   }
   
   .label{

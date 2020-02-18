@@ -18,7 +18,7 @@ const recently = [
     type: 'album',
     cover: 'sds',
     title: 'Hydrograd',
-    description: 'Dragonfucking'
+    description: 'Rocketman'
   }
 ]
 

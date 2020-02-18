@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from 'react'
+import React, { memo } from 'react'
 
 import { Container, Thumb, Track } from './styles'
 import { useDispatch } from 'react-redux'
@@ -20,4 +20,4 @@ function Scroll (props) {
   />
 }
 
-export default Scroll
+export default memo(Scroll)

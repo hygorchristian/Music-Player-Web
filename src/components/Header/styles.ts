@@ -96,15 +96,13 @@ export const SearchContainer = styled.div`
       width: 24px;
       
       &:active{
-        svg{
-          stroke: #A8A8A8;
+        i{
+          color: #A8A8A8;
         }
       }
       
-      svg{
-        stroke: white;
-        width: 14px;
-        height: 14px;
+      i{
+        color: white;
       }
     }
     
@@ -120,11 +118,8 @@ export const SearchContainer = styled.div`
       padding-left: 6px;
       overflow: hidden;
       
-      svg{
-        stroke: #000000;
-        height: 14px;
-        width: 14px;
-        margin-top: 4px;
+      i{
+        color: #000000;
       }
       
       input{
@@ -142,12 +137,6 @@ export const SearchContainer = styled.div`
       & > button{
         height: 24px;
         width: 24px;
-        
-        svg{
-          stroke: #C8C8C8;
-          height: 10px;
-          width: 10px;
-        }
       }
     }
   }
@@ -163,11 +152,6 @@ export const SearchContainer = styled.div`
       flex-direction: row;
       align-items: center;
       
-      & svg{
-        height: 22px;
-        width: 22px;
-        stroke: #ffffff;
-      }
       
       .username{
         display: flex;
@@ -175,6 +159,12 @@ export const SearchContainer = styled.div`
         align-items: center;
         margin-left: 10px;
         margin-right: 20px;
+        
+        &:hover{
+          span{
+            text-decoration: underline;
+          }
+        }
         
         span{
           color: #ffffff;
@@ -190,15 +180,9 @@ export const SearchContainer = styled.div`
       width: 24px;
       
       &:active{
-        svg{
-          stroke: #A8A8A8;
+        i{
+          color: #A8A8A8;
         }
-      }
-      
-      svg{
-        stroke: white;
-        width: 14px;
-        height: 14px;
       }
     }
   }

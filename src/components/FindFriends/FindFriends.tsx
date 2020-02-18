@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { Container } from './styles'
 import { useTabletMode } from '~/hooks'
@@ -29,4 +29,4 @@ function FindFriends (props: FindFriendsProps) {
   )
 }
 
-export default FindFriends
+export default memo(FindFriends)

@@ -2,6 +2,11 @@ import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
 
+  @font-face {
+    font-family: "spoticon";
+    src: url("/fonts/spoticon.ttf") format("ttf");
+  }
+
   *{
     margin: 0;
     padding:0;
@@ -17,6 +22,7 @@ export default createGlobalStyle`
   body{
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale;
     font-family: proxima-nova, sans-serif;
     background: #181818;
     color: #ffffff;
@@ -30,6 +36,5 @@ export default createGlobalStyle`
     justify-content: center;
     background-color: transparent;
     border: none;
-  }
-  
+  }  
 `

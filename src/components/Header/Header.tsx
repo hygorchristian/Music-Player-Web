@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppActions } from '~/store/ducks/app'
 import { ReactSVG } from 'react-svg'
 import { useTabletMode, useWindowSize } from '~/hooks'
+import Spoticon from '~/components/Spoticon/Spoticon'
 
 type HeaderProps = {
 
@@ -32,13 +33,15 @@ function Search (props) {
     <SearchContainer width={headerWidth} {...props} >
       <div className="search-control">
         <button style={{ marginRight: 8 }}>
-          <ReactSVG src="/icons/spotify/chevron-left.svg" />
+          <Spoticon name="chevron-left-solid" size={16} />
+          {/* <ReactSVG src="/icons/spotify/chevron-left.svg" /> */}
         </button>
         <button>
-          <ReactSVG src="/icons/spotify/chevron-right.svg" />
+          <Spoticon name="chevron-right-solid" size={16} />
+          {/* <ReactSVG src="/icons/spotify/chevron-right.svg" /> */}
         </button>
         <div className="search-input">
-          <ReactSVG src="/icons/spotify/search.svg" />
+          <Spoticon name="search" color="#C8C8C8" size={16} />
           <input
             placeholder="Search"
             value={value}
@@ -46,20 +49,20 @@ function Search (props) {
           />
           {(value && value.length > 0) && (
             <button onClick={() => setValue('')}>
-              <ReactSVG src="/icons/spotify/x.svg" />
+              <Spoticon name="close" size={16} color="black" />
             </button>
           )}
         </div>
       </div>
       <div className="user-control">
         <div className="user-info">
-          <ReactSVG src="/icons/spotify/user.svg" />
+          <Spoticon name="user" color="white" size={24} />
           <div className="username">
             <span>rushy06</span>
           </div>
         </div>
         <button>
-          <ReactSVG src="/icons/spotify/chevron-down.svg" />
+          <Spoticon name="chevron-down-solid" color="white" size={16} />
         </button>
       </div>
     </SearchContainer>
