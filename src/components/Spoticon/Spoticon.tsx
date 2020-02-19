@@ -12,13 +12,14 @@ type SpoticonProps = {
   hover: Boolean
 }
 
-function Spoticon ({ name, color = '#ccc', size = 14, hover = false }: SpoticonProps) {
+function Spoticon ({ name, color = '#ccc', size = 14, hover = false, ...props }: SpoticonProps) {
   return (
     <Container
       className={hover ? `spoticon ${name}-bold` : `spoticon ${name}`}
       color={color}
       size={size}
       hover={hover}
+      {...props}
     />
   )
 }

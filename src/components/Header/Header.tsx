@@ -87,6 +87,7 @@ function Header ({ children, ...props }: HeaderProps) {
 
   return (
     <Container
+      id="app-header"
       ref={containerEl}
       fixed={headerFixed}
       overlay={scrollTop > 90 ? 1 : scrollTop / 90}

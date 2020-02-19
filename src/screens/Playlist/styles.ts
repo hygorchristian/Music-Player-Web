@@ -70,6 +70,7 @@ export const Container = styled(Scroll)`
         font-size: 48px;
         font-weight: 800;
         line-height: 48px;
+        cursor: pointer;
       }
       
       p{
@@ -241,18 +242,9 @@ export const Container = styled(Scroll)`
     }
   }
   
-  .fake-content{
-    height: 300vh;
-    padding-top: ${({fixed}) => fixed ? 240 : 0}px;
-    
-    p{
-      margin: 20px;
-    }
-  }
-  
   .extra-size{
     display: block;
-    height: 240px;
+    height: 240px; // + 92
   }
   
   .scroll{

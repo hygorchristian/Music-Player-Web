@@ -42,6 +42,7 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-top: 1px solid #121212;
   
   .music{
     display: flex;

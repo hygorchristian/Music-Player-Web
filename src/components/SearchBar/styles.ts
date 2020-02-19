@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px 0 32px;
+  padding: 0 32px;
   
   .filter{
     display: flex;
@@ -19,7 +19,7 @@ export const Container = styled.div`
     padding: 0 12px;
     
     &:hover, &.focus{    
-      svg{ stroke: #ffffff }
+      i{ color: #ffffff }
       input{ color: #ffffff }
       input::placeholder{ color: #ffffff }
     }
@@ -32,10 +32,8 @@ export const Container = styled.div`
       height: 14px;
     }
     
-    svg{
-      height: 14px;
-      width: 14px;
-      stroke: #A6A6A6;
+    i{
+      color: #A6A6A6;
     }
     
     input{
@@ -62,8 +60,8 @@ export const Container = styled.div`
       &:hover{
         transform: scale(1.05);
         
-        svg{
-          stroke: white;
+        i{
+          color: white;
         }
       }
       
@@ -72,9 +70,7 @@ export const Container = styled.div`
         opacity: 0.6
       }
       
-      svg{
-        height: 12px;
-        width: 12px;
+      i{
         color: #aaaaaa;
       }
     }
@@ -91,5 +87,5 @@ export const Container = styled.div`
       color: #b3b3b3;
       font-weight: 500;
     }    
-    }
+  }
 `;

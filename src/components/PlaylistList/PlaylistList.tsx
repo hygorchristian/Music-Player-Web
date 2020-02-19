@@ -7,6 +7,7 @@ import { Container, ItemContainer } from './styles'
 import MenuPlaylist from '~/components/MenuPlaylist'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppActions } from '~/store/ducks/app'
+import { usePlaylists } from '~/services/firebase'
 
 interface HandleMenuInterface {
   currentTarget: HTMLDivElement
@@ -40,9 +41,10 @@ function PlaylistList (props: PlaylistListProps) {
   const history = useHistory()
   const dispatch = useDispatch()
   const { menuSelected } = useSelector(({ app }) => app)
+  const playlists = usePlaylists()
 
   const selectMenu = (name) => {
-    dispatch(AppActions.setMenuSelected(name))
+    dispatch(AppActions.setMenuSelected(`@playlist/${name}`))
     history.push(`/playlist/${name}`)
   }
 
@@ -68,54 +70,15 @@ function PlaylistList (props: PlaylistListProps) {
       <Container>
         <h2>Playlists</h2>
         <ul>
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('1')}
-            selected={menuSelected === '1'}
-            label="Rocketman: Elton J..."
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('2')}
-            selected={menuSelected === '2'}
-            label="Hard Rock 🤟"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('3')}
-            selected={menuSelected === '3'}
-            label="Nerdcast RPG 🎲"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('4')}
-            selected={menuSelected === '4'}
-            label="Piano"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('5')}
-            selected={menuSelected === '5'}
-            label="Easy come, Easy Go"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('6')}
-            selected={menuSelected === '6'}
-            label="Disco"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('7')}
-            selected={menuSelected === '7'}
-            label="Fuck the System"
-          />
-          <PlaylistItem
-            onContextMenu={openPlaylistMenu}
-            onClick={() => selectMenu('8')}
-            selected={menuSelected === '8'}
-            label="Yuyu Playlist"
-          />
+          {playlists.map(playlist => (
+            <PlaylistItem
+              key={playlist.id}
+              onContextMenu={openPlaylistMenu}
+              onClick={() => selectMenu(playlist.id)}
+              selected={menuSelected === `@playlist/${playlist.id}`}
+              label={playlist.name}
+            />
+          ))}
         </ul>
       </Container>
       <MenuPlaylist

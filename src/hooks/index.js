@@ -22,6 +22,7 @@ export function useScrollProps () {
     if (!elem) return
 
     elem.onscroll(e => {
+      console.log(e)
       // console.log(e)
     })
     setProps({ top: elem.offsetTop })
