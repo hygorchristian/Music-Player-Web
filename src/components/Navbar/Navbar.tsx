@@ -18,6 +18,7 @@ type NavbarProps = {
 function Navbar (props: NavbarProps) {
   const dispatch = useDispatch()
   const { thumbInBottom, menuSelected } = useSelector(({ app }) => app)
+  const { currentSong } = useSelector(({ player }) => player)
 
   const handleContext = (e: MouseEvent) => {
     e.preventDefault()
@@ -74,7 +75,7 @@ function Navbar (props: NavbarProps) {
         <span>New Playlist</span>
       </div>
       <div className={`thumbnail ${thumbInBottom && 'hide'}`}>
-        <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg"/>
+        <img src={currentSong && currentSong.cover}/>
         <ThumbButton size="small" color="primary" onClick={toggleThumb}>
           <ExpandMore style={{ fontSize: 14 }} />
         </ThumbButton>

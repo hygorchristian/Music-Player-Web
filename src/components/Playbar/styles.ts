@@ -26,7 +26,8 @@ export const Slider = withStyles({
   track: {
     height: 4,
     borderRadius: 2,
-    backgroundColor: '#B3B3B3'
+    backgroundColor: '#B3B3B3',
+    transition: 'all 100ms linear'
   },
   rail: {
     height: 4,
@@ -173,8 +174,27 @@ export const Controls = styled.div`
   .progress-slider{
     width: 85%;
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    div.time{
+      font-size: 12px;
+      font-weight: 600;
+      color: #9A9A9A;
+      margin-bottom: 4px;
+      width: 60px;
+      
+      &.progress{
+        text-align: right;
+      }
+    }
     
     .MuiSlider-root{
+      flex: 1;
+      margin: 0 14px;
+    
       .MuiSlider-thumb {
         display: none !important;
       }
@@ -212,6 +232,7 @@ export const SideControls = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-bottom: 2px;
     
     &:hover{
       i{
@@ -237,7 +258,7 @@ export const SideControls = styled.div`
     flex-direction: row;
     align-items: center;
     padding-top: 3px;
-    margin-left: 3px;
+    margin-left: 8px;
     margin-right: 13px;
     
     

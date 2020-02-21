@@ -70,6 +70,7 @@ export const Container = styled.nav`
     
     &.hide{
       max-height: 0;
+    border-top: none;
     }
     
     img{
