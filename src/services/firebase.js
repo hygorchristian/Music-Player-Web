@@ -73,3 +73,23 @@ export const getArtist = (id, callback) => {
     callback(data)
   })
 }
+
+export const getAlbumsFilled = (callback) => {
+  collections.albums.get().then(async snapshot => {
+    const dados = []
+
+    snapshot.forEach(doc => {
+      dados.push(doc.data())
+    })
+
+    for (const album of dados) {
+      const artist_snap = await collections.artists.doc(album.artist_id).get()
+      const artist = artist_snap.data()
+      album.artist = artist
+    }
+
+    console.tron.log({ dados })
+
+    callback(dados)
+  })
+}

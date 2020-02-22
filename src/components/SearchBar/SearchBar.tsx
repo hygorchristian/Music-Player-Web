@@ -12,7 +12,7 @@ type SearchBarProps = {
 
 }
 
-function SearchBar (props: SearchBarProps) {
+function SearchBar ({ noDownload, ...props }: SearchBarProps) {
   const [filterFocus, setFilterFocus] = useState(false)
 
   return (
@@ -35,10 +35,11 @@ function SearchBar (props: SearchBarProps) {
           </button>}
         </div>
       </ClickAwayListener>
-      <div className="download">
+      {!noDownload && <div className="download">
         <div className="label">Download</div>
         <Switch />
-      </div>
+      </div>}
+
     </Container>
   )
 }
