@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { Container, ItemContainer } from './styles'
 import { AppActions } from '~/store/ducks/app'
@@ -26,6 +27,7 @@ function ItemLibrary ({ label, selected, ...props }: ItemLibraryProps) {
 
 function LibraryList (props: LibraryListProps) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { menuSelected } = useSelector(({ app }) => app)
 
   const selectMenu = (name) => {
@@ -52,7 +54,10 @@ function LibraryList (props: LibraryListProps) {
           label="Liked Songs"
         />
         <ItemLibrary
-          onClick={() => selectMenu('albums')}
+          onClick={() => {
+            selectMenu('albums')
+            history.push('/albums')
+          }}
           selected={menuSelected === 'albums'}
           label="Albums"
         />

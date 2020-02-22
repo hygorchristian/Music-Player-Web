@@ -58,6 +58,8 @@ function Playlist (props: HomeProps) {
   }
 
   useEffect(() => {
+    setPlaylist(null)
+
     getPlaylist(id, playlist => {
       setPlaylist(playlist)
     })

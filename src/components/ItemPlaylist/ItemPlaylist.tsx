@@ -8,6 +8,7 @@ import Spoticon from '~/components/Spoticon/Spoticon'
 import { useDispatch, useSelector } from 'react-redux'
 import { PlayerActions } from '~/store/ducks/player'
 import { getAlbum, getArtist } from '~/services/firebase'
+import { secondsToMin } from '~/utils/time'
 
 type ItemPlaylistProps = {
 
@@ -32,7 +33,7 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
         setArtist(_artist)
       })
     })
-  })
+  }, [])
 
   return (
     <Container key={music.id} className={currentSong && currentSong.id === music.id && 'playing'}>
@@ -64,7 +65,7 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
       <td className="text">
         <a href={album && `/album/${album.id}`} className="album">{album && album.name}</a>
       </td>
-      <td className="text" align="right">
+      <td className="text" align="left">
         <span className="date">2019-09-24</span>
       </td>
       <td className="button" align="center">
@@ -73,7 +74,7 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
         </button>
       </td>
       <td className="text" align="right">
-        <span className="time">{music.duration}</span>
+        <span className="time">{secondsToMin(music.duration)}</span>
       </td>
     </Container>
   )

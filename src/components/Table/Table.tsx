@@ -40,10 +40,10 @@ function Table ({ musics }: TableProps) {
           <tr>
             <th style={{ width: 52 }}></th>
             <th style={{ width: 44 }}></th>
-            <th>Title</th>
+            <th style={{ width: 300 }}>Title</th>
             <th style={{ width: 300 }}>Artist</th>
-            <th style={{ width: 320 }}>Album</th>
-            <th style={{ width: 110 }}>
+            <th style={{ width: 160 }}>Album</th>
+            <th style={{ width: 150 }}>
               <Spoticon name="calendar" size={16} />
             </th>
             <th style={{ width: 52 }}></th>
@@ -58,10 +58,10 @@ function Table ({ musics }: TableProps) {
           <tr>
             <th style={{ width: 52 }}></th>
             <th style={{ width: 44 }}></th>
-            <th>Title</th>
+            <th style={{ width: 300 }}>Title</th>
             <th style={{ width: 300 }}>Artist</th>
-            <th style={{ width: 320 }}>Album</th>
-            <th style={{ width: 110 }}>
+            <th style={{ width: 160 }}>Album</th>
+            <th style={{ width: 150 }}>
               <Spoticon name="calendar" size={16} />
             </th>
             <th style={{ width: 52 }}></th>

@@ -24,3 +24,19 @@ export const secondsToHours = (n) => {
 
   return rhours + ' hr ' + rminutes + ' min'
 }
+
+export const secondsToMin = (n) => {
+  const num = n / 60
+  const hours = (num / 60)
+  const rhours = Math.floor(hours)
+  const minutes = (hours - rhours) * 60
+  const rminutes = Math.floor(minutes)
+  const seconds = (num % 60 - rminutes) * 60
+  const rseconds = Math.floor(seconds)
+
+  if (rhours === 0) {
+    return rminutes + ':' + rseconds.toString().padStart(2, '0')
+  }
+
+  return rhours + ':' + rminutes.toString().padStart(2, '0') + ':' + rseconds.toString().padStart(2, '0')
+}

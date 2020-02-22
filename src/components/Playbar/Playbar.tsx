@@ -10,7 +10,7 @@ import { ExpandLess } from '@material-ui/icons'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import { usePlayer } from '~/hooks/player'
 import { PlayerActions } from '~/store/ducks/player'
-import { getAlbumCover } from '~/services/firebase'
+import { getAlbum, getAlbumCover, getArtist } from '~/services/firebase'
 
 type PlaybarProps = {
 
@@ -26,6 +26,7 @@ function Playbar (props: PlaybarProps) {
   const [authorMenuPos, setAuthorMenuPos] = useState({ top: 0, left: 0 })
   const [muted, setMuted] = useState(false)
   const [coverImg, setCoverImg] = useState(null)
+  const [artist, setArtist] = useState(null)
 
   const { thumbInBottom } = useSelector(({ app }) => app)
   const { currentSong, status, position: playerPosition, volume } = useSelector(({ player }) => player)
@@ -71,7 +72,15 @@ function Playbar (props: PlaybarProps) {
   }
 
   useEffect(() => {
-    currentSong && getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
+    if (currentSong) {
+      getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
+
+      getAlbum(currentSong.album_id, _album => {
+        getArtist(_album.artist_id, _artist => {
+          setArtist(_artist)
+        })
+      })
+    }
   }, [currentSong])
 
   return (
@@ -105,7 +114,7 @@ function Playbar (props: PlaybarProps) {
               </button>
             </div>
             <div className="author-name" onContextMenu={openAuthorMenu}>
-              <span>{currentSong.author}</span>
+              <span>{artist && artist.name}</span>
             </div>
           </div>}
         </div>
