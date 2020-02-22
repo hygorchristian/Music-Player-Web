@@ -59,3 +59,17 @@ export const getAlbumCover = (id, callback) => {
     callback(album.cover.downloadURL)
   })
 }
+
+export const getAlbum = (id, callback) => {
+  collections.albums.doc(id).onSnapshot(snapshot => {
+    const data = snapshot.data()
+    callback(data)
+  })
+}
+
+export const getArtist = (id, callback) => {
+  collections.artists.doc(id).onSnapshot(snapshot => {
+    const data = snapshot.data()
+    callback(data)
+  })
+}

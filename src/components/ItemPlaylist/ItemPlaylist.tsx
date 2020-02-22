@@ -1,12 +1,13 @@
 // @ts-nocheck
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Player from 'react-sound'
 
 import { Container } from './styles'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import { useDispatch, useSelector } from 'react-redux'
 import { PlayerActions } from '~/store/ducks/player'
-import Player from 'react-sound'
+import { getAlbum, getArtist } from '~/services/firebase'
 
 type ItemPlaylistProps = {
 
@@ -14,12 +15,24 @@ type ItemPlaylistProps = {
 
 function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
   const [fav, setFav] = useState(false)
+  const [artist, setArtist] = useState(null)
+  const [album, setAlbum] = useState(null)
   const { currentSong, status } = useSelector(({ player }) => player)
   const dispatch = useDispatch()
 
   const pause = () => {
     dispatch(PlayerActions.pause())
   }
+
+  useEffect(() => {
+    getAlbum(music.album_id, _album => {
+      setAlbum(_album)
+
+      getArtist(_album.artist_id, _artist => {
+        setArtist(_artist)
+      })
+    })
+  })
 
   return (
     <Container key={music.id} className={currentSong && currentSong.id === music.id && 'playing'}>
@@ -46,10 +59,10 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
         <span className="title">{music.name}</span>
       </td>
       <td className="text">
-        <span className="artist">Elton John</span>
+        <a href={artist && `/artist/${artist.id}`} className="artist">{artist && artist.name}</a>
       </td>
       <td className="text">
-        <span className="album">Ice On Fire</span>
+        <a href={album && `/album/${album.id}`} className="album">{album && album.name}</a>
       </td>
       <td className="text" align="right">
         <span className="date">2019-09-24</span>

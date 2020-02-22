@@ -49,10 +49,19 @@ export const Container = styled.tr`
       }
     }
     
+    
     .title, .artist, .album{
       font-size: 14px;
       font-weight: 600;
       color: #ffffff;
+    }
+    
+    .artist, .album{
+      text-decoration: none;
+      
+      &:hover{
+        text-decoration: underline;
+      }
     }
     
     .date, .time{
