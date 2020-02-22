@@ -5,7 +5,7 @@ import Player from 'react-sound'
 // Action Types & Creators
 
 const { Types, Creators } = createActions({
-  load: ['song', 'list'],
+  load: ['song', 'list', 'playlist', 'album'],
   play: null,
   pause: null,
   playing: ['position', 'duration'],
@@ -13,7 +13,9 @@ const { Types, Creators } = createActions({
   prev: null,
   handlePosition: ['percent'],
   setPosition: ['percent'],
-  setVolume: ['volume']
+  setVolume: ['volume'],
+  currentAlbum: null,
+  currentPlaylist: null
 })
 
 export const PlayerTypes = Types
@@ -33,7 +35,7 @@ export const INITIAL_STATE = Immutable({
 
 // Reducer Functions
 
-const load = (state, { song, list }) => ({ ...state, position: 0, currentSong: song, status: Player.status.PLAYING, list })
+const load = (state, { song, list, playlist, album }) => ({ ...state, position: 0, currentSong: song, status: Player.status.PLAYING, list, currentPlaylist: playlist, currentAlbum: album })
 const play = state => ({ ...state, status: Player.status.PLAYING })
 const pause = state => ({ ...state, status: Player.status.PAUSED })
 const next = (state) => {

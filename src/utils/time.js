@@ -10,6 +10,8 @@ export const msToTime = (duration) => {
 }
 
 export const secondsToHours = (n) => {
+  if (!n) return
+
   const num = n / 60
   const hours = (num / 60)
   const rhours = Math.floor(hours)

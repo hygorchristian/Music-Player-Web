@@ -10,7 +10,7 @@ type SwitchProps = {
 function Switch (props: SwitchProps) {
   return (
     <Container>
-      <_Switch {...props} />
+      <_Switch id="switao" {...props} />
     </Container>
   )
 }

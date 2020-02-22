@@ -22,7 +22,7 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
   const [albumMenuPos, setAlbumMenuPos] = useState({ top: 0, left: 0 })
 
   const handleDetails = () => {
-    history.push(`/albums/${data.id}`)
+    history.push(`/album/${data.id}`)
   }
 
   const handleContextMenu = (e: MouseEvent) => {

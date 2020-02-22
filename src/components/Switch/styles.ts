@@ -8,6 +8,10 @@ export const Container = styled.div`
     align-items: center;
     justify-content: flex-end;
   }
+  
+  .MuiSwitch-colorSecondary.Mui-checked:hover {
+    background-color: transparent;
+  }
     
   .MuiIconButton-root:hover{
     background-color: transparent;
