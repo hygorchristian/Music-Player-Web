@@ -5,6 +5,7 @@ export default createGlobalStyle`
   @font-face {
     font-family: "spoticon";
     src: url("/fonts/spoticon.ttf") format("ttf");
+    src: url("/fonts/spoticon.woff2") format("woff2");
   }
 
   *{
