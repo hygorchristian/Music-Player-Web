@@ -3,13 +3,15 @@
 import React, { useEffect, useState, memo } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '~/components/Header'
-import { MoreHoriz, Edit } from '@material-ui/icons'
+import { MoreHoriz } from '@material-ui/icons'
+import { getPlaylist } from '~/services/firebase'
 
 import { Container } from './styles'
 import { useSelector } from 'react-redux'
 import Table from '~/components/Table'
 import SearchBar from '~/components/SearchBar'
-import { usePlaylists } from '~/services/firebase'
+import { secondsToHours } from '~/utils/time'
+
 import Spoticon from '~/components/Spoticon/Spoticon'
 import MenuPlaylist from '~/components/MenuPlaylist'
 import MenuCreator from '~/components/MenuCreator'
@@ -25,7 +27,6 @@ function Playlist (props: HomeProps) {
   const [creatorMenuPos, setCreatorMenuPos] = useState({ top: 0, left: 0 })
 
   const { headerFixed } = useSelector(({ app }) => app)
-  const playlists = usePlaylists()
   const [playlist, setPlaylist] = useState(null)
   const { id } = useParams()
 
@@ -57,15 +58,10 @@ function Playlist (props: HomeProps) {
   }
 
   useEffect(() => {
-    console.tron.log({
-      id, playlists
+    getPlaylist(id, playlist => {
+      setPlaylist(playlist)
     })
-
-    const arr = playlists.filter(playlist => playlist.id === id)
-    if (arr.length > 0) {
-      setPlaylist(arr[0])
-    }
-  }, [playlists, id])
+  }, [id])
 
   if (!playlist) {
     return null
@@ -77,7 +73,7 @@ function Playlist (props: HomeProps) {
         <Header height={308}>
           <div className="head">
             <div className="cover" onContextMenu={openPlaylistMenu}>
-              <img src="https://popcultura.com.br/wp-content/uploads/2019/05/Elton-John-Rocketman-soundtrack-cover-web-optimised-820.jpg" />
+              <img src={playlist.cover.downloadURL} />
               <div className="overlay">
                 <Spoticon name="edit" size={60} color="white" />
               </div>
@@ -86,7 +82,7 @@ function Playlist (props: HomeProps) {
               <div className="label">Playlist</div>
               <h2 className="title" onContextMenu={openPlaylistMenu}>{playlist.name}</h2>
               <p className="text">
-                Created by <a onContextMenu={openCreatorMenu}>{playlist.creator}</a> • {playlist.songsCount} songs, {playlist.timeCount}
+                Created by <a onContextMenu={openCreatorMenu}>{playlist.creator}</a> • {playlist.musics.length} {playlist.musics.length > 1 ? 'songs' : 'song'}, {secondsToHours(playlist.playlistDuration)}
               </p>
               <div className="controls">
                 <button className="play">
@@ -117,9 +113,7 @@ function Playlist (props: HomeProps) {
         </Header>
         {headerFixed && <div className="extra-size" />}
         <SearchBar />
-        <Table>
-        hell
-        </Table>
+        <Table musics={playlist.musics} />
       </Container>
       <MenuPlaylist
         open={playlistMenuOpen}

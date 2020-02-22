@@ -22,37 +22,9 @@ export const PlayerActions = Creators
 // Initial State
 
 export const INITIAL_STATE = Immutable({
-  currentSong: {
-    id: 1,
-    name: 'Toxicity',
-    author: 'System of a Down',
-    file: '/tmp/toxicity.mp3',
-    cover: 'https://lh3.googleusercontent.com/proxy/juGCRqcWgXn3uU9rugemVL4AJO7W1YZ-nOPyDSvG3Ba6BWd-mkKF508j3jfBkDSx9fdnYp1Vh6Mt1HoDShA1vPQY1KY2KteCO0t3K27_lByBVcUhl2EMW5hMiaL3tyk'
-  },
-  status: Player.status.PLAYING,
-  list: [
-    {
-      id: 1,
-      name: 'Toxicity',
-      author: 'System of a Down',
-      file: '/tmp/toxicity.mp3',
-      cover: 'https://lh3.googleusercontent.com/proxy/juGCRqcWgXn3uU9rugemVL4AJO7W1YZ-nOPyDSvG3Ba6BWd-mkKF508j3jfBkDSx9fdnYp1Vh6Mt1HoDShA1vPQY1KY2KteCO0t3K27_lByBVcUhl2EMW5hMiaL3tyk'
-    },
-    {
-      id: 2,
-      name: 'Heroes of our Time',
-      author: 'Dragonforce',
-      file: '/tmp/heroes.mp3',
-      cover: 'https://http2.mlstatic.com/cd-dragonforce-ultra-beatdown-cd-dvd-lacrado-D_NQ_NP_917381-MLB26295910380_112017-F.jpg'
-    },
-    {
-      id: 3,
-      name: 'Fury of the Storm',
-      author: 'Dragonforce',
-      file: '/tmp/fury.mp3',
-      cover: 'https://upload.wikimedia.org/wikipedia/pt/0/0e/Sonic_Firestorm_por_DragonForce.jpg'
-    }
-  ],
+  currentSong: null,
+  status: Player.status.PAUSED,
+  list: [],
   position: null,
   duration: null,
   positionShown: null,

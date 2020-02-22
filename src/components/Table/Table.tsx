@@ -3,20 +3,30 @@
 import React, { useState, useRef, useEffect } from 'react'
 
 import { Container } from './styles'
-import Spoticon from '~/components/Spoticon/Spoticon'
-import { useSelector } from 'react-redux'
+import Spoticon from '~/components/Spoticon'
+import ItemPlaylist from '~/components/ItemPlaylist'
+import { useDispatch, useSelector } from 'react-redux'
+import { PlayerActions } from '~/store/ducks/player'
 
 type TableProps = {
 
 }
 
-const items = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]
-
-function Table (props: TableProps) {
+function Table ({ musics }: TableProps) {
   const [fav, setFav] = useState(false)
   const [top, setTop] = useState(0)
   const { scrollTop } = useSelector(({ app }) => app)
+  const { currentSong } = useSelector(({ player }) => player)
   const table = useRef(null)
+  const dispatch = useDispatch()
+
+  const handlePlay = (music) => {
+    if (currentSong && currentSong.id === music.id) {
+      dispatch(PlayerActions.play())
+    } else {
+      dispatch(PlayerActions.load(music, musics))
+    }
+  }
 
   useEffect(() => {
     const _top = table.current && table.current.getBoundingClientRect().top
@@ -61,41 +71,8 @@ function Table (props: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {items.map(item => (
-            <tr>
-              <td className="button" align="center">
-                <button className="control-button outlined">
-                  <Spoticon name="play" color="#ffffff" size={14} />
-                </button>
-              </td>
-              <td className="button" align="center" onClick={() => setFav(!fav)}>
-                {fav ? (
-                  <Spoticon name="heart-solid" color="#ffffff" size={16} style={{ lineHeight: '40px' }} />
-                ) : (
-                  <Spoticon name="heart" color="#ffffff" size={16} style={{ lineHeight: '40px' }} />
-                )}
-              </td>
-              <td>
-                <span className="title">Nikita</span>
-              </td>
-              <td>
-                <span className="artist">Elton John</span>
-              </td>
-              <td>
-                <span className="album">Ice On Fire</span>
-              </td>
-              <td align="right">
-                <span className="date">2019-09-24</span>
-              </td>
-              <td className="button" align="center">
-                <button className="control-button">
-                  <Spoticon name="dots-h" color="#ffffff" size={24} />
-                </button>
-              </td>
-              <td align="right">
-                <span className="time">5:43</span>
-              </td>
-            </tr>
+          {musics.map(music => (
+            <ItemPlaylist music={music} onPlay={handlePlay} />
           ))}
         </tbody>
       </table>

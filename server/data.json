@@ -1,0 +1,55 @@
+{
+  "playlists": [
+    {
+      "id": 1,
+      "name": "This is Alan Waker",
+      "creator": "rushy06",
+      "musicsId": [1,2,3],
+      "cover": "https://pl.scdn.co/images/pl/default/1800ddf6d052a056605a4ad0f801363f0fdddbb9"
+    }
+  ],
+  "albums": [
+    {
+      "id": 1,
+      "name": "Alan",
+      "cover": "",
+      "artist_id": 1,
+      "musics": [1, 2, 3]
+    }
+  ],
+  "artists": [
+    {
+      "id": 1,
+      "name": "Alan Waker",
+      "cover": "",
+      "musics": [
+        { "id": 1 },
+        { "id": 2 },
+        { "id": 3 }
+      ]
+    }
+  ],
+  "musics": [
+    {
+      "id": 1,
+      "name": "Fury of the Storm",
+      "album": "Alan",
+      "file": "/tmp/fury.mp3",
+      "duration": 134
+    },
+    {
+      "id": 2,
+      "name": "Fury of the Storm",
+      "album": "Alan",
+      "file": "/tmp/fury.mp3",
+      "duration": 134
+    },
+    {
+      "id": 3,
+      "name": "Fury of the Storm",
+      "album": "Alan",
+      "file": "/tmp/fury.mp3",
+      "duration": 134
+    }
+  ]
+}

@@ -26,8 +26,7 @@ export const Slider = withStyles({
   track: {
     height: 4,
     borderRadius: 2,
-    backgroundColor: '#B3B3B3',
-    transition: 'all 100ms linear'
+    backgroundColor: '#B3B3B3'
   },
   rail: {
     height: 4,

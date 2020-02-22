@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { ReactSVG } from 'react-svg'
 
 import { Container, Scroll, Thumb } from './styles'
@@ -10,6 +10,7 @@ import { ThumbButton } from '~/components/Playbar/styles'
 import LibraryList from '~/components/LibraryList'
 import PlaylistList from '~/components/PlaylistList'
 import ItemMainMenu from '~/components/ItemMainMenu'
+import { getAlbumCover } from '~/services/firebase'
 
 type NavbarProps = {
 
@@ -19,6 +20,7 @@ function Navbar (props: NavbarProps) {
   const dispatch = useDispatch()
   const { thumbInBottom, menuSelected } = useSelector(({ app }) => app)
   const { currentSong } = useSelector(({ player }) => player)
+  const [coverImg, setCoverImg] = useState(null)
 
   const handleContext = (e: MouseEvent) => {
     e.preventDefault()
@@ -31,6 +33,10 @@ function Navbar (props: NavbarProps) {
   const selectMenu = (name) => {
     dispatch(AppActions.setMenuSelected(name))
   }
+
+  useEffect(() => {
+    currentSong && getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
+  }, [currentSong])
 
   return (
     <Container onContextMenu={handleContext}>
@@ -75,7 +81,7 @@ function Navbar (props: NavbarProps) {
         <span>New Playlist</span>
       </div>
       <div className={`thumbnail ${thumbInBottom && 'hide'}`}>
-        <img src={currentSong && currentSong.cover}/>
+        <img src={coverImg}/>
         <ThumbButton size="small" color="primary" onClick={toggleThumb}>
           <ExpandMore style={{ fontSize: 14 }} />
         </ThumbButton>

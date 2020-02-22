@@ -8,3 +8,19 @@ export const msToTime = (duration) => {
 
   return `${minutes}:${seconds}`
 }
+
+export const secondsToHours = (n) => {
+  const num = n / 60
+  const hours = (num / 60)
+  const rhours = Math.floor(hours)
+  const minutes = (hours - rhours) * 60
+  const rminutes = Math.floor(minutes)
+  const seconds = (num % 60 - rminutes) * 60
+  const rseconds = Math.floor(seconds)
+
+  if (rhours === 0) {
+    return rminutes + ' min ' + rseconds + ' sec'
+  }
+
+  return rhours + ' hr ' + rminutes + ' min'
+}

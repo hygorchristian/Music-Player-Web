@@ -10,6 +10,7 @@ import { ExpandLess } from '@material-ui/icons'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import { usePlayer } from '~/hooks/player'
 import { PlayerActions } from '~/store/ducks/player'
+import { getAlbumCover } from '~/services/firebase'
 
 type PlaybarProps = {
 
@@ -24,6 +25,7 @@ function Playbar (props: PlaybarProps) {
   const [authorMenuOpen, setAuthorMenuOpen] = useState(false)
   const [authorMenuPos, setAuthorMenuPos] = useState({ top: 0, left: 0 })
   const [muted, setMuted] = useState(false)
+  const [coverImg, setCoverImg] = useState(null)
 
   const { thumbInBottom } = useSelector(({ app }) => app)
   const { currentSong, status, position: playerPosition, volume } = useSelector(({ player }) => player)
@@ -68,11 +70,15 @@ function Playbar (props: PlaybarProps) {
     closeAuthorMenu()
   }
 
+  useEffect(() => {
+    currentSong && getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
+  }, [currentSong])
+
   return (
     <>
       { !!currentSong && (
         <Sound
-          url={currentSong.file}
+          url={currentSong.file.downloadURL}
           playStatus={status}
           onFinishedPlaying={() => dispatch(PlayerActions.next())}
           onPlaying={({ position, duration }) => dispatch(PlayerActions.playing(position, duration))}
@@ -84,7 +90,7 @@ function Playbar (props: PlaybarProps) {
       <Container onContextMenu={handleContextMenu}>
         <div className="music">
           {!!currentSong && <div className={`thumbnail ${!thumbInBottom && 'hide'}`}>
-            <img src={currentSong.cover} alt="cover"/>
+            <img src={coverImg} />
             <ThumbButton size="small" color="primary" onClick={toggleThumb}>
               <ExpandLess style={{ fontSize: 14 }} />
             </ThumbButton>
