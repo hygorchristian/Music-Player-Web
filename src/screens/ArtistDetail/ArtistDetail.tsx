@@ -9,7 +9,6 @@ import { getArtistFilled } from '~/services/firebase'
 
 import { Container } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import Table from '~/components/Table'
 import SearchBar from '~/components/SearchBar'
 
 import Spoticon from '~/components/Spoticon/Spoticon'
@@ -67,7 +66,7 @@ function ArtistDetail (props: ArtistDetailProps) {
     if (currentArtist === artist.id) {
       dispatch(PlayerActions.play())
     } else {
-      dispatch(PlayerActions.load(artist.musics[0], artist.musics, null, artist.id))
+      dispatch(PlayerActions.load(artist.populars[0], artist.populars, null, artist.id))
     }
   }
 
