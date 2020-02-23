@@ -13,25 +13,25 @@ type TableMusicLabelProps = {
 }
 
 function TableMusicLabel ({ label, musics, ...props }: TableMusicLabelProps) {
-  const [fav, setFav] = useState(false)
-  const [top, setTop] = useState(0)
-  const { scrollTop } = useSelector(({ app }) => app)
-  const { currentSong } = useSelector(({ player }) => player)
-  const table = useRef(null)
+  const [rest, setRest] = useState(0)
+  const [musicsShown, setMusicsShown] = useState([])
   const dispatch = useDispatch()
 
-  const handlePlay = (music) => {
-    if (currentSong && currentSong.id === music.id) {
-      dispatch(PlayerActions.play())
-    } else {
-      dispatch(PlayerActions.load(music, musics))
-    }
+  const setSplited = () => {
+    if (!musics) return
+
+    const split = musics.slice(0, 5)
+    setMusicsShown(split)
+    setRest(musics.length - 5)
+  }
+
+  const playSong = (music) => {
+    dispatch(PlayerActions.load(music, musics, null, null))
   }
 
   useEffect(() => {
-    const _top = table.current && table.current.getBoundingClientRect().top
-    setTop(_top)
-  }, [scrollTop])
+    setSplited()
+  }, [musics])
 
   if (!musics) return null
   if (musics.length === 0) return null
@@ -41,11 +41,24 @@ function TableMusicLabel ({ label, musics, ...props }: TableMusicLabelProps) {
       <h2>{label}</h2>
       <table>
         <tbody>
-          {musics.map(music => (
-            <ItemMusic key={music.key} music={music} onPlay={handlePlay} />
+          {musicsShown.map((music, i) => (
+            <ItemMusic key={music.key} music={music} onPlay={playSong} index={i + 1} />
           ))}
         </tbody>
       </table>
+      {rest > 0 && musics.length > musicsShown.length && (
+        <button className="btn" onClick={() => {
+          setMusicsShown(musics)
+        }}>
+          <span>Show {rest} more</span>
+        </button>
+      )}
+      {musicsShown.length > 5 && rest > 0 && (
+        <button className="btn" onClick={setSplited}>
+          <span>Show only 5 songs</span>
+        </button>
+      )}
+
     </Container>
   )
 }

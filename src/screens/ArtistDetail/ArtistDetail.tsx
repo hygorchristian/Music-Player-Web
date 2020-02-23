@@ -154,7 +154,6 @@ function ArtistDetail (props: ArtistDetailProps) {
         {headerFixed && <div className="extra-size" />}
         <SearchBar />
         <TableMusicLabel label="Popular" musics={artist.populars} />
-        <div className="size" style={{ height: '300vh' }}>ss</div>
       </Container>
       <MenuPlaylist
         open={playlistMenuOpen}
