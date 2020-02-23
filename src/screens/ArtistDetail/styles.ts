@@ -327,7 +327,7 @@ export const Container = styled(Scroll)`
     height: 240px; // + 92
   }
   
-  .title{
+  & .title-section{
     padding: 0 32px;
     margin-top: 48px;
     

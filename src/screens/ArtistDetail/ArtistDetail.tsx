@@ -155,7 +155,7 @@ function ArtistDetail (props: ArtistDetailProps) {
         {headerFixed && <div className="extra-size" />}
         <SearchBar />
         <TableMusicLabel label="Popular" musics={artist.populars} />
-        <div className="title">
+        <div className="title-section">
           <h2>Albums</h2>
         </div>
         <GridItems data={artist.albums} />
