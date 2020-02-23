@@ -1,10 +1,9 @@
 // @ts-nocheck
 
 import React, { useEffect, useState, useRef } from 'react'
-import { Container, SearchContainer, Fixed } from './styles'
+import { Container, SearchContainer } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppActions } from '~/store/ducks/app'
-import { ReactSVG } from 'react-svg'
 import { useTabletMode, useWindowSize } from '~/hooks'
 import Spoticon from '~/components/Spoticon/Spoticon'
 
