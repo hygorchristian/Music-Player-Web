@@ -1,7 +1,10 @@
+// @ts-nocheck
+
 import React, { memo } from 'react'
 
 import { Container } from './styles'
 import { useTabletMode } from '~/hooks'
+import Spoticon from '~/components/Spoticon'
 
 type FindFriendsProps = {
 
@@ -20,10 +23,21 @@ function FindFriends (props: FindFriendsProps) {
       <div className="ball-md" />
       <div className="ball-sm" />
       <div className="text">
-        <h2>See what your friends are playing</h2>
-        <button>
-          <span className="label">find friends</span>
-        </button>
+        <h2>
+          <span>Developed with </span>
+          <Spoticon name="heart-solid" size={16} color="white" />
+          <span> by </span>
+          <a href="https://github.com/rushy06" target="_blank">Hygor Dias</a>
+        </h2>
+        <a className="button" href="https://github.com/rushy06" target="_blank">
+          <span className="label">github</span>
+        </a>
+        <a className="button" href="https://www.linkedin.com/in/hygor-christian" target="_blank">
+          <span className="label">linkedin</span>
+        </a>
+        <a className="button" href="https://github.com/rushy06/Music-Player-Web" target="_blank">
+          <span className="label">Source</span>
+        </a>
       </div>
     </Container>
   )

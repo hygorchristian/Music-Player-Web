@@ -45,10 +45,20 @@ export const Container = styled.div`
       font-weight: 800;
       line-height: 24px;
       text-align: center;
+      margin-bottom: 50px;
+      
+      a{
+        text-decoration: none;
+        color: white;
+      }
+      
+      i{
+        display: block;
+      }
     }
     
-    button{
-      margin-top: 50px;
+    a.button{
+      margin-bottom: 20px;
       height: 32px;
       width: 160px;
       display: flex;
@@ -58,6 +68,7 @@ export const Container = styled.div`
       border: 1px solid #B3B3B3;
       border-radius: 16px;
       transition: opacity 100ms ease-in-out;
+      text-decoration: none;
       
       &:hover{
         transform: scale(1.05);
