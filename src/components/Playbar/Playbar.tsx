@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState, memo, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Container, Controls, ThumbButton, Slider, SideControls, Button } from './styles'
 import MenuAuthor from '~/components/MenuAuthor'
 import Sound from 'react-sound'
@@ -20,6 +21,7 @@ const SM_ICON = 16
 
 function Playbar (props: PlaybarProps) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [titleMenuOpen, setTitleMenuOpen] = useState(false)
   const [titleMenuPos, setTitleMenuPos] = useState({ top: 0, left: 0 })
   const [authorMenuOpen, setAuthorMenuOpen] = useState(false)
@@ -27,6 +29,9 @@ function Playbar (props: PlaybarProps) {
   const [muted, setMuted] = useState(false)
   const [coverImg, setCoverImg] = useState(null)
   const [artist, setArtist] = useState(null)
+
+  const [shuffle, setShuffle] = useState(false)
+  const [repeatState, setRepeatState] = useState(0)
 
   const { thumbInBottom } = useSelector(({ app }) => app)
   const { currentSong, status, position: playerPosition, volume } = useSelector(({ player }) => player)
@@ -64,6 +69,17 @@ function Playbar (props: PlaybarProps) {
 
   const closeAuthorMenu = () => {
     setAuthorMenuOpen(false)
+  }
+
+  const handleRepeat = () => {
+    const num = repeatState + 1
+
+    if (num === 3) {
+      setRepeatState(0)
+      return
+    }
+
+    setRepeatState(num)
   }
 
   const handleClickAway = () => {
@@ -113,14 +129,19 @@ function Playbar (props: PlaybarProps) {
                 <Spoticon name="heart" size={16} />
               </button>
             </div>
-            <div className="author-name" onContextMenu={openAuthorMenu}>
+            <div
+              className="author-name"
+              onContextMenu={openAuthorMenu}
+              onClick={() => artist && history.push(`/artist/${artist.id}`)}
+            >
               <span>{artist && artist.name}</span>
             </div>
           </div>}
         </div>
         <Controls>
           <div className="buttons">
-            <Button>
+            <Button className={shuffle && 'active'} onClick={() => setShuffle(!shuffle)}>
+              <div className="dot" />
               <Spoticon name="shuffle" size={SM_ICON} />
             </Button>
             <Button onClick={() => dispatch(PlayerActions.prev())}>
@@ -142,8 +163,11 @@ function Playbar (props: PlaybarProps) {
             <Button onClick={() => dispatch(PlayerActions.next())}>
               <Spoticon name="next" size={SM_ICON} />
             </Button>
-            <Button>
-              <Spoticon name="repeat" size={SM_ICON} />
+            <Button className={repeatState !== 0 && 'active'} onClick={handleRepeat}>
+              <div className="dot" />
+              {repeatState === 0 && <Spoticon name="repeat" size={SM_ICON} />}
+              {repeatState === 1 && <Spoticon name="repeat" size={SM_ICON} />}
+              {repeatState === 2 && <Spoticon name="repeat-one" size={SM_ICON} />}
             </Button>
           </div>
           <div className="progress-slider">

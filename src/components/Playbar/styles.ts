@@ -127,15 +127,25 @@ export const Container = styled.div`
           height: 16px;
           margin-left: 14px;
           
-          i{
-            color: #A4A4A4;
+          &.active{
+            i{
+              color: red
+            }
           }
           
           &:hover *{
             color: #ffffff;
           }
           
+          &.active:hover *{
+            color: red;
+          }
+          
           &:active *{
+            color: #A4A4A4;
+          }
+          
+          i{
             color: #A4A4A4;
           }
           
@@ -298,6 +308,18 @@ export const Button = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  
+  &.active .dot{
+    display: block;
+    height: 4px;
+    width: 4px;
+    border-radius: 2px;
+    background-color: #1EB954;
+    position: absolute;
+    align-self: center;
+    bottom: 3px;
+  }
   
   &:hover *{
     color: #ffffff;
@@ -305,6 +327,10 @@ export const Button = styled.button`
   
   &:active *{
     color: #b3b3b3;
+  }
+  
+  &.active *{
+    color: #20d760;
   }
   
   &.large{
