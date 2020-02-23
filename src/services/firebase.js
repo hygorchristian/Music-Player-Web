@@ -74,6 +74,17 @@ export const getArtist = (id, callback) => {
   })
 }
 
+export const getArtists = (callback) => {
+  collections.artists.onSnapshot(snapshot => {
+    const dados = []
+    snapshot.forEach(doc => {
+      dados.push(doc.data())
+    })
+
+    callback(dados)
+  })
+}
+
 export const getAlbumsFilled = (callback) => {
   collections.albums.get().then(async snapshot => {
     const dados = []

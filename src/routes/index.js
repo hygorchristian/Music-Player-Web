@@ -11,7 +11,7 @@ import Artists from '~/screens/Artists'
 function Routes () {
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
+      <Route path="/" exact component={Albums} />
       <Route path="/albums" exact component={Albums} />
       <Route path="/album/:id" exact component={AlbumDetail} />
       <Route path="/artists" exact component={Artists} />

@@ -83,7 +83,7 @@ export const Container = styled.div`
       font-size: 14px;
       font-weight: 800;
       margin-top: 12px;
-      line-height: 16spx;
+      line-height: 16px;
       cursor: pointer;
       
       &:hover{
