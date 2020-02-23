@@ -327,6 +327,17 @@ export const Container = styled(Scroll)`
     height: 240px; // + 92
   }
   
+  .title{
+    padding: 0 32px;
+    margin-top: 48px;
+    
+    h2{
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+  }
+  
   .scroll{
     width: 100%;
     margin: 0 32px;

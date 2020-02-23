@@ -145,6 +145,7 @@ export const getArtistFilled = (id, callback) => {
       })
 
       album.musics = musics
+      album.artist = artist
     }
 
     artist.albums = albums

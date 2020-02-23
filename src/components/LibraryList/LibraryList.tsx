@@ -62,7 +62,10 @@ function LibraryList (props: LibraryListProps) {
           label="Albums"
         />
         <ItemLibrary
-          onClick={() => selectMenu('artists')}
+          onClick={() => {
+            selectMenu('artists')
+            history.push('/artists')
+          }}
           selected={menuSelected === 'artists'}
           label="Artists"
         />

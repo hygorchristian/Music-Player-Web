@@ -16,6 +16,7 @@ import MenuPlaylist from '~/components/MenuPlaylist'
 import MenuCreator from '~/components/MenuCreator'
 import TableMusicLabel from '~/components/TableMusicLabel'
 import { PlayerActions } from '~/store/ducks/player'
+import GridItems from '~/components/GridItems'
 
 type ArtistDetailProps = {
 
@@ -28,7 +29,7 @@ function ArtistDetail (props: ArtistDetailProps) {
   const [playlistMenuPos, setPlaylistMenuPos] = useState({ top: 0, left: 0 })
   const [creatorMenuOpen, setCreatorMenuOpen] = useState(false)
   const [creatorMenuPos, setCreatorMenuPos] = useState({ top: 0, left: 0 })
-  const [artist, setArtist] = useState([])
+  const [artist, setArtist] = useState(null)
 
   const { headerFixed } = useSelector(({ app }) => app)
   const { currentArtist, status } = useSelector(({ player }) => player)
@@ -79,6 +80,7 @@ function ArtistDetail (props: ArtistDetailProps) {
 
     getArtistFilled(id, _artist => {
       setArtist(_artist)
+      console.tron.log({ _artist })
     })
   }, [id])
 
@@ -153,6 +155,10 @@ function ArtistDetail (props: ArtistDetailProps) {
         {headerFixed && <div className="extra-size" />}
         <SearchBar />
         <TableMusicLabel label="Popular" musics={artist.populars} />
+        <div className="title">
+          <h2>Albums</h2>
+        </div>
+        <GridItems data={artist.albums} />
       </Container>
       <MenuPlaylist
         open={playlistMenuOpen}
