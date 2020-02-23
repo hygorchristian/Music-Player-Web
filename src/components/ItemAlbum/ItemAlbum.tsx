@@ -66,7 +66,7 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
         </div>
         <div className="info">
           <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>{data.name}</h4>
-          <p>{data.artist.name}</p>
+          <p onClick={() => history.push(`/artist/${data.artist.id}`)}>{data.artist.name}</p>
         </div>
       </Container>
       <MenuAlbum

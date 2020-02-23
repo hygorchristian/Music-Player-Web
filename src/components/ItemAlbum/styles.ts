@@ -92,13 +92,19 @@ export const Container = styled.div`
     }
     
     p{
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 500;
       color: #B3B3B3;
       margin-top: 8px;
       line-height: 20px;
       margin: 0;
       letter-spacing: 0.2px;
+      margin-top: 4px;
+      cursor: pointer;
+      
+      &:hover{
+        text-decoration: underline;
+      }
     }
   }
 `;

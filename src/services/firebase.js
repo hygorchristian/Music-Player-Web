@@ -121,3 +121,37 @@ export const getAlbumFilled = (id, callback) => {
     callback(album)
   })
 }
+
+export const getArtistFilled = (id, callback) => {
+  collections.artists.doc(id).onSnapshot(async snapshot => {
+    const artist = snapshot.data()
+
+    const albums_snap = await collections.albums.where('artist_id', '==', artist.id).get()
+    const albums = []
+    const artist_musics = []
+
+    albums_snap.forEach(doc => {
+      albums.push(doc.data())
+    })
+
+    for (const album of albums) {
+      const musics = []
+      const musics_snap = await collections.musics.where('album_id', '==', album.id).get()
+      musics_snap.forEach(doc => {
+        const music = doc.data()
+        music.album = album
+        musics.push(music)
+        artist_musics.push(music)
+      })
+
+      album.musics = musics
+    }
+
+    artist.albums = albums
+    artist.populars = artist_musics.slice(0, 10)
+
+    console.tron.log({ artist })
+
+    callback(artist)
+  })
+}

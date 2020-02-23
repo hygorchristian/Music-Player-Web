@@ -119,7 +119,7 @@ function AlbumDetail (props: AlbumDetailProps) {
                   <Spoticon name="heart-solid" size={16} color="white" />
                 </button>
                 <button className="options" onClick={openPlaylistMenu}>
-                  <MoreHoriz style={{ color: 'B3B3B3' }} />
+                  <Spoticon name="dots-h" size={24} />
                 </button>
               </div>
             </div>
@@ -142,7 +142,7 @@ function AlbumDetail (props: AlbumDetailProps) {
                 </button>
               )}
               <button className="options" onClick={openPlaylistMenu}>
-                <MoreHoriz style={{ color: 'B3B3B3' }} />
+                <Spoticon name="dots-h" size={24} />
               </button>
               <button className="options" onClick={openPlaylistMenu}>
                 <Spoticon name="heart-solid" size={14} color="white" />

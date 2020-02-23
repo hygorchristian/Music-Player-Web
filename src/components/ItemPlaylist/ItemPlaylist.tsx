@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Player from 'react-sound'
+import { useHistory } from 'react-router-dom'
 
 import { Container } from './styles'
 import Spoticon from '~/components/Spoticon/Spoticon'
@@ -20,6 +21,7 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
   const [album, setAlbum] = useState(null)
   const { currentSong, status } = useSelector(({ player }) => player)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const pause = () => {
     dispatch(PlayerActions.pause())
@@ -60,10 +62,10 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
         <span className="title">{music.name}</span>
       </td>
       <td className="text">
-        <a href={artist && `/artist/${artist.id}`} className="artist">{artist && artist.name}</a>
+        <a onClick={() => artist && history.push(`/artist/${artist.id}`)} className="artist">{artist && artist.name}</a>
       </td>
       <td className="text">
-        <a href={album && `/album/${album.id}`} className="album">{album && album.name}</a>
+        <a onClick={() => album && history.push(`/album/${album.id}`)} className="album">{album && album.name}</a>
       </td>
       <td className="text" align="left">
         <span className="date">2019-09-24</span>
