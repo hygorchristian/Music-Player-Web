@@ -4,16 +4,16 @@
 
 ## :book: Sumary
 
-- [About this Project](https://github.com/rushy06/Music-Player-Web#)
-- [Why?](https://github.com/rushy06/Music-Player-Web#)
-- [Some Observations about this App](https://github.com/rushy06/Music-Player-Web#)
-- [Links](https://github.com/rushy06/Music-Player-Web#)
-- [Features](https://github.com/rushy06/Music-Player-Web#)
-- [Getting Started](https://github.com/rushy06/Music-Player-Web#)
-- [Dependencies ans Tools](https://github.com/rushy06/Music-Player-Web#)
-- [Support tools](https://github.com/rushy06/Music-Player-Web#)
-- [Contributing](https://github.com/rushy06/Music-Player-Web#)
-- [License](https://github.com/rushy06/Music-Player-Web#)
+- [About this Project](https://github.com/rushy06/Music-Player-Web#speech_balloon-about-this-project)
+- [Why?](https://github.com/rushy06/Music-Player-Web#thinking-why)
+- [Some Observations about this App](https://github.com/rushy06/Music-Player-Web#mag_right-some-observations-about-this-app)
+- [Links](https://github.com/rushy06/Music-Player-Web#link-links)
+- [Features](https://github.com/rushy06/Music-Player-Web#white_check_mark-features)
+- [Getting Started](https://github.com/rushy06/Music-Player-Web#rocket-getting-started)
+- [Dependencies ans Tools](https://github.com/rushy06/Music-Player-Web#gear-dependencies-ans-tools)
+- [Support tools](https://github.com/rushy06/Music-Player-Web#wrench-support-tools)
+- [Contributing](https://github.com/rushy06/Music-Player-Web#ok_hand-contributing)
+- [License](https://github.com/rushy06/Music-Player-Web#book-license)
 
 ## :speech_balloon: About this Project
 
@@ -166,4 +166,4 @@ Thank you!
 
 ## :book: License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/steniowagner/mindCast/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rushy06/Music-Player-Web/blob/master/LICENSE) file for details
