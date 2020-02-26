@@ -75,7 +75,7 @@ export const getArtist = (id, callback) => {
 }
 
 export const getArtists = (callback) => {
-  collections.artists.onSnapshot(snapshot => {
+  collections.artists.where('private', '==', 0).onSnapshot(snapshot => {
     const dados = []
     snapshot.forEach(doc => {
       dados.push(doc.data())
@@ -86,7 +86,7 @@ export const getArtists = (callback) => {
 }
 
 export const getAlbumsFilled = (callback) => {
-  collections.albums.get().then(async snapshot => {
+  collections.albums.where('private', '==', 0).get().then(async snapshot => {
     const dados = []
 
     snapshot.forEach(doc => {
