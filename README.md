@@ -1,19 +1,19 @@
 # Music Player
 
-![Preview-Screens](https://github.com/rushy06/Music-Player-Web/blob/master/public/docs/preview.png)
+![Preview-Screens](https://github.com/hygorchristian/Music-Player-Web/blob/master/public/docs/preview.png)
 
 ## :book: Sumary
 
-- [About this Project](https://github.com/rushy06/Music-Player-Web#speech_balloon-about-this-project)
-- [Why?](https://github.com/rushy06/Music-Player-Web#thinking-why)
-- [Some Observations about this App](https://github.com/rushy06/Music-Player-Web#mag_right-some-observations-about-this-app)
-- [Links](https://github.com/rushy06/Music-Player-Web#link-links)
-- [Features](https://github.com/rushy06/Music-Player-Web#white_check_mark-features)
-- [Getting Started](https://github.com/rushy06/Music-Player-Web#rocket-getting-started)
-- [Dependencies ans Tools](https://github.com/rushy06/Music-Player-Web#gear-dependencies-ans-tools)
-- [Support tools](https://github.com/rushy06/Music-Player-Web#wrench-support-tools)
-- [Contributing](https://github.com/rushy06/Music-Player-Web#ok_hand-contributing)
-- [License](https://github.com/rushy06/Music-Player-Web#book-license)
+- [About this Project](https://github.com/hygorchristian/Music-Player-Web#speech_balloon-about-this-project)
+- [Why?](https://github.com/hygorchristian/Music-Player-Web#thinking-why)
+- [Some Observations about this App](https://github.com/hygorchristian/Music-Player-Web#mag_right-some-observations-about-this-app)
+- [Links](https://github.com/hygorchristian/Music-Player-Web#link-links)
+- [Features](https://github.com/hygorchristian/Music-Player-Web#white_check_mark-features)
+- [Getting Started](https://github.com/hygorchristian/Music-Player-Web#rocket-getting-started)
+- [Dependencies ans Tools](https://github.com/hygorchristian/Music-Player-Web#gear-dependencies-ans-tools)
+- [Support tools](https://github.com/hygorchristian/Music-Player-Web#wrench-support-tools)
+- [Contributing](https://github.com/hygorchristian/Music-Player-Web#ok_hand-contributing)
+- [License](https://github.com/hygorchristian/Music-Player-Web#book-license)
 
 ## :speech_balloon: About this Project
 
@@ -49,28 +49,30 @@ If you want to test the App in the Production mode, the links is here:
 - Choose an album, artist or playlist
 
 - Playlists
-	- Create, Edit and Remove your Playlists (Admin)
-	- Play musics, pause, next, previous
-	- Shuffle Musics from Album
-	- Repeat Musics from Album
-	- Play/Pause the current Playlist
-	- Next/Previous podcast on the Playlist
 
-- Albums 
-	- Create, Edit and Remove your Albums (Admin)
-	- Play musics, pause, next, previous
-	- Shuffle Musics from Album
-	- Repeat Musics from Album
-	- Play/Pause the current Music
-	- Next/Previous podcast on the Album List
+  - Create, Edit and Remove your Playlists (Admin)
+  - Play musics, pause, next, previous
+  - Shuffle Musics from Album
+  - Repeat Musics from Album
+  - Play/Pause the current Playlist
+  - Next/Previous podcast on the Playlist
+
+- Albums
+
+  - Create, Edit and Remove your Albums (Admin)
+  - Play musics, pause, next, previous
+  - Shuffle Musics from Album
+  - Repeat Musics from Album
+  - Play/Pause the current Music
+  - Next/Previous podcast on the Album List
 
 - Artists
-	- Create, Edit and Remove your Artist (Admin)
-	- Play musics, pause, next, previous
-	- Shuffle Musics from Artist
-	- Repeat Musics from Artist
-	- Play/Pause the current Music
-	- Next/Previous podcast on the Artist List
+  - Create, Edit and Remove your Artist (Admin)
+  - Play musics, pause, next, previous
+  - Shuffle Musics from Artist
+  - Repeat Musics from Artist
+  - Play/Pause the current Music
+  - Next/Previous podcast on the Artist List
 
 ## :rocket: Getting Started
 
@@ -84,7 +86,7 @@ The server with some sample musics run in Firebase, so you can just change the F
 **Cloning the Repository**
 
 ```
-$ git clone https://github.com/rushy06/Music-Player-Web
+$ git clone https://github.com/hygorchristian/Music-Player-Web
 
 $ cd Music-PLayer-Web
 ```
@@ -110,6 +112,7 @@ Development
 ```
 $ yarn start
 ```
+
 _or_
 
 ```
@@ -118,15 +121,16 @@ $ npm run start
 
 Production
 
-
 ```
 $ yarn build
 ```
+
 _or_
 
 ```
 $ npm run build
 ```
+
 Then run the file located at /build/index.html
 
 ## :gear: Dependencies ans Tools
@@ -148,7 +152,6 @@ Then run the file located at /build/index.html
 - [Prettier](https://prettier.io/) - Code Formatter
 - [Babel](https://babeljs.io/) - JavaScript Compiler
 
-
 ## :wrench: Support tools
 
 - [Image-Resize](https://imageresize.org) - Resize the Images
@@ -166,4 +169,4 @@ Thank you!
 
 ## :book: License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rushy06/Music-Player-Web/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/hygorchristian/Music-Player-Web/blob/master/LICENSE) file for details

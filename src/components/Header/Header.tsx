@@ -57,7 +57,7 @@ function Search (props) {
         <div className="user-info">
           <Spoticon name="user" color="white" size={24} />
           <div className="username">
-            <span>rushy06</span>
+            <span>hygorchristian</span>
           </div>
         </div>
         <button>

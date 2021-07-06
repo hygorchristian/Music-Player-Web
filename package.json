@@ -44,7 +44,9 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sync": "aws s3 sync build/ s3://spotify.hygorchristian.com",
+    "deploy": "yarn build && yarn sync"
   },
   "eslintConfig": {
     "extends": "react-app"
