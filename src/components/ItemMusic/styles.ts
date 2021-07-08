@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.tr`
+  span.index{
+    font-family: Montserrat, sans-serif;
+  }
   
   &.playing{    
     background-color: #282828;
@@ -19,6 +22,7 @@ export const Container = styled.tr`
     
     span.index{
       display: none;
+      
     }
   }
 
@@ -63,7 +67,7 @@ export const Container = styled.tr`
       span{
         display: block;
         color: #B3B3B3;
-        font-family: Montserrat;
+        font-family: Montserrat, sans-serif;
         font-size: 13px;
       }     
     }

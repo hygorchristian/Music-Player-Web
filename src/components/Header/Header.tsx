@@ -1,8 +1,10 @@
 // @ts-nocheck
 
 import React, { useEffect, useState, useRef } from 'react'
-import { Container, SearchContainer } from './styles'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { Container, SearchContainer } from './styles'
 import { AppActions } from '~/store/ducks/app'
 import { useTabletMode, useWindowSize } from '~/hooks'
 import Spoticon from '~/components/Spoticon/Spoticon'
@@ -14,6 +16,7 @@ type HeaderProps = {
 function Search (props) {
   const { width } = useWindowSize()
   const { isTablet } = useTabletMode()
+  const history = useHistory()
 
   const [value, setValue] = useState('')
   const [headerWidth, setHeaderWidth] = useState(isTablet ? width - 200 : width - 456)
@@ -21,6 +24,10 @@ function Search (props) {
   const handleChange = (e: React.ChangeEvent) => {
     const newValue = e.target.value
     setValue(newValue)
+  }
+
+  const handleBack = () => {
+    history.goBack()
   }
 
   useEffect(() => {
@@ -31,13 +38,11 @@ function Search (props) {
   return (
     <SearchContainer width={headerWidth} {...props} >
       <div className="search-control">
-        <button style={{ marginRight: 8 }}>
+        <button style={{ marginRight: 8 }} onClick={handleBack}>
           <Spoticon name="chevron-left-solid" size={16} />
-          {/* <ReactSVG src="/icons/spotify/chevron-left.svg" /> */}
         </button>
         <button>
           <Spoticon name="chevron-right-solid" size={16} />
-          {/* <ReactSVG src="/icons/spotify/chevron-right.svg" /> */}
         </button>
         <div className="search-input">
           <Spoticon name="search" color="#C8C8C8" size={16} />

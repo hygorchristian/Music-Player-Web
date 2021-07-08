@@ -99,6 +99,15 @@ function Playbar (props: PlaybarProps) {
     }
   }, [currentSong])
 
+  useEffect(() => {
+    navigator.mediaSession.setActionHandler('play', () => alert('play'))
+    navigator.mediaSession.setActionHandler('pause', () => alert('pause'))
+    navigator.mediaSession.setActionHandler('seekbackward', () => alert('seekbackward'))
+    navigator.mediaSession.setActionHandler('seekforward', () => alert('seekforward'))
+    navigator.mediaSession.setActionHandler('previoustrack', () => alert('previoustrack'))
+    navigator.mediaSession.setActionHandler('nexttrack', () => alert('nexttrack'))
+  }, [])
+
   return (
     <>
       { !!currentSong && (
