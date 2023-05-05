@@ -1,19 +1,19 @@
-import { createStore, compose, applyMiddleware } from 'redux'
+import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { __DEV__ } from '../utils/dev'
 import reducers from './ducks'
 import sagas from './sagas'
-import { __DEV__ } from '../utils/dev'
 
 // Persistor
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['Auth'] // only navigation will be persisted
+  whitelist: ['Auth'], // only navigation will be persisted
 }
 
 const middlewares = []
@@ -27,10 +27,7 @@ const sagaMiddleware = createSagaMiddleware({ sagaMonitor })
 middlewares.push(sagaMiddleware)
 
 const composer = __DEV__
-  ? compose(
-    applyMiddleware(...middlewares),
-    console.tron.createEnhancer()
-  )
+  ? compose(applyMiddleware(...middlewares), console.tron.createEnhancer())
   : compose(applyMiddleware(...middlewares))
 
 const persistedReducer = persistReducer(persistConfig, reducers)
@@ -41,3 +38,5 @@ const persistor = persistStore(store)
 sagaMiddleware.run(sagas)
 
 export { store, persistor }
+
+export type RootState = ReturnType<typeof persistedReducer>

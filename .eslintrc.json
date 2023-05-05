@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "plugin:react/recommended",
-    "standard"
-  ],
+  "extends": ["plugin:react/recommended", "standard"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,14 +17,13 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "jsx-a11y",
-    "import",
-    "prettier"
-  ],
-  "rules":  {
-
+  "plugins": ["react", "@typescript-eslint", "jsx-a11y", "import", "prettier"],
+  "rules": {
+    "comma-dangle": "off",
+    "camelcase": "off",
+    "space-before-function-paren": "off",
+    "no-unused-vars": "off",
+    "indent": "off",
+    "no-unused-expressions": "off"
   }
 }

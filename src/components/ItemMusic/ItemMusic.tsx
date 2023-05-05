@@ -1,18 +1,13 @@
-// @ts-nocheck
-
 import React, { useEffect, useState } from 'react'
-import Player from 'react-sound'
 
-import { Container } from './styles'
-import Spoticon from '~/components/Spoticon/Spoticon'
 import { useDispatch, useSelector } from 'react-redux'
+import Spoticon from '~/components/Spoticon/Spoticon'
 import { PlayerActions } from '~/store/ducks/player'
+import { Container } from './styles'
 
-type ItemMusicProps = {
+type ItemMusicProps = {}
 
-}
-
-function ItemMusic ({ music, onPlay, index, ...props }: ItemMusicProps) {
+function ItemMusic({ music, onPlay, index, ...props }: ItemMusicProps) {
   const [isPlaying, setPlaying] = useState(false)
   const { currentSong, status } = useSelector(({ player }) => player)
   const dispatch = useDispatch()
@@ -22,7 +17,11 @@ function ItemMusic ({ music, onPlay, index, ...props }: ItemMusicProps) {
   }
 
   useEffect(() => {
-    setPlaying(currentSong && currentSong.id === music.id && status === Player.status.PLAYING)
+    setPlaying(
+      currentSong &&
+        currentSong.id === music.id &&
+        status === playerStatus.PLAYING
+    )
   }, [status, currentSong, music])
 
   return (

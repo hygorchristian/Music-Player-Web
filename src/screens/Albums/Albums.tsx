@@ -1,30 +1,21 @@
-// @ts-nocheck
-
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo } from 'react'
 import Header from '~/components/Header'
 
-import { Container } from './styles'
+import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import GridItems from '~/components/GridItems'
 import SearchBar from '~/components/SearchBar'
-import { getAlbumsFilled } from '~/services/firebase'
+import api from '~/services/api'
+import { Container } from './styles'
 
-type AlbumsProps = {
-
-}
-
-function Albums (props: AlbumsProps) {
+function Albums() {
   const { headerFixed } = useSelector(({ app }) => app)
-  const [albums, setAlbums] = useState([])
+  const { data: albums, isLoading } = useQuery('albums', () => api.getAlbums())
 
-  useEffect(() => {
-    getAlbumsFilled(data => {
-      setAlbums(data)
-    })
-  }, [])
+  if (isLoading || !albums) return <div>loading...</div>
 
   return (
-    <Container onContextMenu={e => e.preventDefault()}>
+    <Container onContextMenu={(e: MouseEvent) => e.preventDefault()}>
       <Header height={210}>
         <div className="head">
           <h1>Albums</h1>
@@ -35,7 +26,7 @@ function Albums (props: AlbumsProps) {
       </Header>
       {headerFixed && <div className="extra-size" />}
       <SearchBar noDownload />
-      <GridItems data={albums} />
+      <GridItems albums={albums} />
     </Container>
   )
 }

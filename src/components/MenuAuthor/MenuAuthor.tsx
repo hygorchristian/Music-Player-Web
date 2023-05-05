@@ -27,7 +27,7 @@ function MenuAuthor (props: MenuAuthorProps) {
         vertical: 'top',
         horizontal: 'left'
       }}
-      onBackdropClick={onClickAway}
+      onClose={onClickAway}
       onContextMenu={onContext}
     >
       <MenuList>

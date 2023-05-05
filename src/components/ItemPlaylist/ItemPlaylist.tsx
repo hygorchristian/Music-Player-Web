@@ -1,21 +1,15 @@
-// @ts-nocheck
-
-import React, { useEffect, useState } from 'react'
-import Player from 'react-sound'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container } from './styles'
-import Spoticon from '~/components/Spoticon/Spoticon'
 import { useDispatch, useSelector } from 'react-redux'
-import { PlayerActions } from '~/store/ducks/player'
-import { getAlbum, getArtist } from '~/services/firebase'
+import Spoticon from '~/components/Spoticon/Spoticon'
+import { PlayerActions, playerStatus } from '~/store/ducks/player'
 import { secondsToMin } from '~/utils/time'
+import { Container } from './styles'
 
-type ItemPlaylistProps = {
+type ItemPlaylistProps = {}
 
-}
-
-function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
+function ItemPlaylist({ music, onPlay }: ItemPlaylistProps) {
   const [fav, setFav] = useState(false)
   const [artist, setArtist] = useState(null)
   const [album, setAlbum] = useState(null)
@@ -27,45 +21,62 @@ function ItemPlaylist ({ music, onPlay }: ItemPlaylistProps) {
     dispatch(PlayerActions.pause())
   }
 
-  useEffect(() => {
-    getAlbum(music.album_id, _album => {
-      setAlbum(_album)
-
-      getArtist(_album.artist_id, _artist => {
-        setArtist(_artist)
-      })
-    })
-  }, [])
-
   return (
-    <Container key={music.id} className={currentSong && currentSong.id === music.id && 'playing'}>
+    <Container
+      key={music.id}
+      className={currentSong && currentSong.id === music.id && 'playing'}
+    >
       <td className="button" align="center">
-        {currentSong && currentSong.id === music.id && status === Player.status.PLAYING ? (
+        {currentSong &&
+        currentSong.id === music.id &&
+        status === playerStatus.PLAYING ? (
           <button className="control-button outlined" onClick={() => pause()}>
             <Spoticon name="pause" color="#ffffff" size={14} />
           </button>
         ) : (
-          <button className="control-button outlined hide" onClick={() => onPlay(music)}>
+          <button
+            className="control-button outlined hide"
+            onClick={() => onPlay(music)}
+          >
             <Spoticon name="play" color="#ffffff" size={14} />
           </button>
         )}
-
       </td>
       <td className="button" align="center" onClick={() => setFav(!fav)}>
         {fav ? (
-          <Spoticon name="heart-solid" color="#ffffff" size={16} style={{ lineHeight: '40px' }} />
+          <Spoticon
+            name="heart-solid"
+            color="#ffffff"
+            size={16}
+            style={{ lineHeight: '40px' }}
+          />
         ) : (
-          <Spoticon name="heart" color="#ffffff" size={16} style={{ lineHeight: '40px' }} />
+          <Spoticon
+            name="heart"
+            color="#ffffff"
+            size={16}
+            style={{ lineHeight: '40px' }}
+          />
         )}
       </td>
       <td className="text">
         <span className="title">{music.name}</span>
       </td>
       <td className="text">
-        <a onClick={() => artist && history.push(`/artist/${artist.id}`)} className="artist">{artist && artist.name}</a>
+        <a
+          onClick={() => artist && history.push(`/artist/${artist.id}`)}
+          className="artist"
+        >
+          {artist && artist.name}
+        </a>
       </td>
       <td className="text">
-        <a onClick={() => album && history.push(`/album/${album.id}`)} className="album">{album && album.name}</a>
+        <a
+          onClick={() => album && history.push(`/album/${album.id}`)}
+          className="album"
+        >
+          {album && album.name}
+        </a>
       </td>
       <td className="text" align="left">
         <span className="date">2019-09-24</span>

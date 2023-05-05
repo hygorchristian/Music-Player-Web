@@ -1,17 +1,15 @@
-// @ts-nocheck
+import React, { useEffect, useState } from 'react'
 
-import React, { useEffect, useRef, useState } from 'react'
-
-import { Container } from './styles'
 import ItemAlbum from '~/components/ItemAlbum'
-import { useTabletMode, useWindowSize } from '~/hooks'
-import { getItemsPerRow, getItemWidth } from '~/utils/dev'
-
+import { useWindowSize } from '~/hooks'
+import { Album } from '~/types/Data'
+import { getItemsPerRow } from '~/utils/dev'
+import { Container } from './styles'
 type GridItemsProps = {
-
+  albums: Album[]
 }
 
-function GridItems ({ data, ...props }: GridItemsProps) {
+function GridItems({ albums, ...props }: GridItemsProps) {
   const { width } = useWindowSize()
   const [itemsPerRow, setItemsPerRow] = useState(getItemsPerRow(width))
 
@@ -20,9 +18,9 @@ function GridItems ({ data, ...props }: GridItemsProps) {
   }, [width])
 
   return (
-    <Container itemsPerRow={itemsPerRow} >
-      {data.map(item => (
-        <ItemAlbum key={item.id} data={item} />
+    <Container itemsPerRow={itemsPerRow}>
+      {albums.map((item) => (
+        <ItemAlbum key={item.id} album={item} />
       ))}
     </Container>
   )

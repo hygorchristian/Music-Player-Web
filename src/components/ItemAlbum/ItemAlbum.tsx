@@ -1,19 +1,19 @@
-// @ts-nocheck
-
-import React, { useEffect, useState } from 'react'
+/* eslint-disable  */
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container } from './styles'
-import { getItemWidth } from '~/utils/dev'
-import { useTabletMode, useWindowSize } from '~/hooks'
-import Spoticon from '~/components/Spoticon/Spoticon'
 import MenuAlbum from '~/components/MenuAlbum'
+import Spoticon from '~/components/Spoticon/Spoticon'
+import { useWindowSize } from '~/hooks'
+import { Album } from '~/types/Data'
+import { getItemWidth } from '~/utils/dev'
+import { Container } from './styles'
 
 type ItemAlbumProps = {
-
+  album: Album
 }
 
-function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
+function ItemAlbum({ album, ...props }: ItemAlbumProps) {
   const { width } = useWindowSize()
   const history = useHistory()
 
@@ -22,7 +22,7 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
   const [albumMenuPos, setAlbumMenuPos] = useState({ top: 0, left: 0 })
 
   const handleDetails = () => {
-    history.push(`/album/${data.id}`)
+    history.push(`/album/${album.id}`)
   }
 
   const handleContextMenu = (e: MouseEvent) => {
@@ -33,10 +33,10 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
     setAlbumMenuOpen(false)
   }
 
-  const openAlbumMenu = (e: HandleMenuInterface) => {
+  const openAlbumMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setAlbumMenuOpen(true)
     setAlbumMenuPos(pos)
@@ -50,9 +50,12 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
     <>
       <Container width={itemSize}>
         <div className="image">
-          <img src={data.cover.downloadURL}/>
-
-          <div className="overlay" onClick={handleDetails} onContextMenu={openAlbumMenu}>
+          <img src={album.coverURL} />
+          <div
+            className="overlay"
+            onClick={handleDetails}
+            onContextMenu={openAlbumMenu}
+          >
             <button>
               <Spoticon name="heart-solid" size={18} color="white" />
             </button>
@@ -65,15 +68,19 @@ function ItemAlbum ({ data, ...props }: ItemAlbumProps) {
           </div>
         </div>
         <div className="info">
-          <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>{data.name}</h4>
-          <p onClick={() => history.push(`/artist/${data.artist.id}`)}>{data.artist.name}</p>
+          <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>
+            {album.name}
+          </h4>
+          <p onClick={() => history.push(`/artist/${album.artist.id}`)}>
+            {album.artist.name}
+          </p>
         </div>
       </Container>
       <MenuAlbum
         open={albumMenuOpen}
         position={albumMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: MouseEvent) => {
           handleContextMenu(e)
           handleClickAway()
         }}

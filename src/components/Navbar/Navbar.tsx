@@ -1,22 +1,19 @@
 // @ts-nocheck
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useState } from 'react'
 import { ReactSVG } from 'react-svg'
 
-import { Container, Scroll, Thumb } from './styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppActions } from '~/store/ducks/app'
 import { ExpandMore } from '@material-ui/icons'
-import { ThumbButton } from '~/components/Playbar/styles'
-import LibraryList from '~/components/LibraryList'
-import PlaylistList from '~/components/PlaylistList'
+import { useDispatch, useSelector } from 'react-redux'
 import ItemMainMenu from '~/components/ItemMainMenu'
-import { getAlbumCover } from '~/services/firebase'
+import LibraryList from '~/components/LibraryList'
+import { ThumbButton } from '~/components/Playbar/styles'
+import PlaylistList from '~/components/PlaylistList'
+import { AppActions } from '~/store/ducks/app'
+import { Container, Scroll, Thumb } from './styles'
 
-type NavbarProps = {
+type NavbarProps = {}
 
-}
-
-function Navbar (props: NavbarProps) {
+function Navbar(props: NavbarProps) {
   const dispatch = useDispatch()
   const { thumbInBottom, menuSelected } = useSelector(({ app }) => app)
   const { currentSong } = useSelector(({ player }) => player)
@@ -33,10 +30,6 @@ function Navbar (props: NavbarProps) {
   const selectMenu = (name) => {
     dispatch(AppActions.setMenuSelected(name))
   }
-
-  useEffect(() => {
-    currentSong && getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
-  }, [currentSong])
 
   return (
     <Container onContextMenu={handleContext}>
@@ -69,7 +62,7 @@ function Navbar (props: NavbarProps) {
         </ul>
       </nav>
       <div className="scroll-list">
-        <Scroll renderThumbVertical={(props) => <Thumb {...props} />} >
+        <Scroll renderThumbVertical={(props) => <Thumb {...props} />}>
           <div className="content">
             <LibraryList />
             <PlaylistList />
@@ -81,7 +74,7 @@ function Navbar (props: NavbarProps) {
         <span>New Playlist</span>
       </div>
       <div className={`thumbnail ${thumbInBottom && 'hide'}`}>
-        <img src={coverImg}/>
+        <img src={coverImg} />
         <ThumbButton size="small" color="primary" onClick={toggleThumb}>
           <ExpandMore style={{ fontSize: 14 }} />
         </ThumbButton>

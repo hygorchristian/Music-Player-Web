@@ -2,25 +2,31 @@
 
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  fixed: boolean
+  overlay: number
+  fixed: boolean
+  isTablet: boolean
+}>`
   display: flex;
   flex-direction: column;
-  width: ${({ isTablet }) => isTablet ? 'calc(100vw - 200px)' : 'calc(100vw - 456px)'};
-  height: ${({ height, fixed }) => fixed ? 116 : height}px;
-  max-height: ${({ fixed }) => fixed ? 116 : 1000}px;
-  position: ${({ fixed }) => fixed ? 'fixed' : 'relative'}; 
-  border-bottom:${({ fixed }) => fixed ? '1px solid #282828' : 'none'};
+  width: ${({ isTablet }) =>
+    isTablet ? 'calc(100vw - 200px)' : 'calc(100vw - 456px)'};
+  height: ${({ height, fixed }) => (fixed ? 116 : height)}px;
+  max-height: ${({ fixed }) => (fixed ? 116 : 1000)}px;
+  position: ${({ fixed }) => (fixed ? 'fixed' : 'relative')};
+  border-bottom: ${({ fixed }) => (fixed ? '1px solid #282828' : 'none')};
   z-index: 1000;
-  
-  .overlay{
+
+  .overlay {
     height: 100%;
     width: 100%;
     background-color: #121212;
     position: absolute;
     opacity: ${({ overlay }) => overlay};
   }
-  
-  .gradient{
+
+  .gradient {
     height: 100%;
     width: 100%;
     display: flex;
@@ -32,16 +38,16 @@ export const Container = styled.div`
     position: absolute;
     background-image: linear-gradient(#414141, #181818);
   }
-  
-  .content{
+
+  .content {
     display: flex;
     flex-direction: row;
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    
-    .header-info{
+
+    .header-info {
       position: absolute;
       bottom: 0;
       display: flex;
@@ -50,21 +56,21 @@ export const Container = styled.div`
       display: flex;
       width: 100%;
       flex-direction: column;
-      
-      &.fixed{
+
+      &.fixed {
         bottom: 500px;
       }
     }
-    
-    .subheader-info{
+
+    .subheader-info {
       position: absolute;
       bottom: -100px;
       padding-left: 32px;
       transition: all 150ms ease-in-out;
       width: 100%;
       display: flex;
-      
-      &.fixed{
+
+      &.fixed {
         bottom: 0;
       }
     }
@@ -75,38 +81,42 @@ export const Fixed = styled.div`
   height: 116px;
 `
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.div<{ width: number }>`
   height: 48px;
   width: ${({ width }) => width}px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  position: fixed; 
-  background: linear-gradient(rgba(18,18,18,${({ bgOpacity }) => bgOpacity}) 0%, rgba(18,18,18,${({ bgOpacity }) => bgOpacity}) 70%, rgba(18,18,18,0) 100%);
+  position: fixed;
+  background: linear-gradient(
+    rgba(18, 18, 18, ${({ bgOpacity }) => bgOpacity}) 0%,
+    rgba(18, 18, 18, ${({ bgOpacity }) => bgOpacity}) 70%,
+    rgba(18, 18, 18, 0) 100%
+  );
 
-  .search-control{
+  .search-control {
     margin-left: 14px;
     display: flex;
     flex-direction: row;
     align-items: center;
-  
-    & > button{
+
+    & > button {
       height: 24px;
       width: 24px;
-      
-      &:active{
-        i{
-          color: #A8A8A8;
+
+      &:active {
+        i {
+          color: #a8a8a8;
         }
       }
-      
-      i{
+
+      i {
         color: white;
       }
     }
-    
-    .search-input{
+
+    .search-input {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -117,71 +127,69 @@ export const SearchContainer = styled.div`
       margin-left: 14px;
       padding-left: 6px;
       overflow: hidden;
-      
-      i{
+
+      i {
         color: #000000;
       }
-      
-      input{
+
+      input {
         border: none;
         padding-left: 6px;
         height: 100%;
         font-size: 12px;
         width: 130px;
-        
-        &::placeholder{
+
+        &::placeholder {
           color: #000000;
         }
       }
-      
-      & > button{
+
+      & > button {
         height: 24px;
         width: 24px;
       }
     }
   }
-  
-  .user-control{
+
+  .user-control {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-right: 35px;
-    
-    .user-info{
+
+    .user-info {
       display: flex;
       flex-direction: row;
       align-items: center;
-      
-      
-      .username{
+
+      .username {
         display: flex;
         flex-direction: row;
         align-items: center;
         margin-left: 10px;
         margin-right: 20px;
-        
-        &:hover{
-          span{
+
+        &:hover {
+          span {
             text-decoration: underline;
           }
         }
-        
-        span{
+
+        span {
           color: #ffffff;
           font-size: 14px;
           line-height: 10px;
         }
       }
-      
     }
-    
-    button{
+
+    button {
       height: 24px;
       width: 24px;
-      
-      &:active{
-        i{
-          color: #A8A8A8;
+
+      &:active {
+        i {
+          color: #a8a8a8;
         }
       }
     }

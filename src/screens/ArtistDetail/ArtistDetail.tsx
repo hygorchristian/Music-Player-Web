@@ -1,28 +1,22 @@
-// @ts-nocheck
-
-import React, { useEffect, useState, memo } from 'react'
-import Player from 'react-sound'
+import React, { memo, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 import Header from '~/components/Header'
-import { getArtistFilled } from '~/services/firebase'
 
-import { Container } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import SearchBar from '~/components/SearchBar'
+import { Container } from './styles'
 
-import Spoticon from '~/components/Spoticon/Spoticon'
-import MenuPlaylist from '~/components/MenuPlaylist'
-import MenuCreator from '~/components/MenuCreator'
-import TableMusicLabel from '~/components/TableMusicLabel'
-import { PlayerActions } from '~/store/ducks/player'
 import GridItems from '~/components/GridItems'
+import MenuCreator from '~/components/MenuCreator'
+import MenuPlaylist from '~/components/MenuPlaylist'
+import Spoticon from '~/components/Spoticon/Spoticon'
+import TableMusicLabel from '~/components/TableMusicLabel'
+import { PlayerActions, playerStatus } from '~/store/ducks/player'
 
-type ArtistDetailProps = {
+type ArtistDetailProps = {}
 
-}
-
-function ArtistDetail (props: ArtistDetailProps) {
+function ArtistDetail(props: ArtistDetailProps) {
   const dispatch = useDispatch()
 
   const [playlistMenuOpen, setPlaylistMenuOpen] = useState(false)
@@ -40,7 +34,7 @@ function ArtistDetail (props: ArtistDetailProps) {
     e.preventDefault()
   }
 
-  const handleClickAway = e => {
+  const handleClickAway = (e) => {
     setPlaylistMenuOpen(false)
     setCreatorMenuOpen(false)
   }
@@ -48,7 +42,7 @@ function ArtistDetail (props: ArtistDetailProps) {
   const openPlaylistMenu = (e) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setPlaylistMenuOpen(true)
     setPlaylistMenuPos(pos)
@@ -57,7 +51,7 @@ function ArtistDetail (props: ArtistDetailProps) {
   const openCreatorMenu = (e) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setCreatorMenuOpen(true)
     setCreatorMenuPos(pos)
@@ -67,7 +61,9 @@ function ArtistDetail (props: ArtistDetailProps) {
     if (currentArtist === artist.id) {
       dispatch(PlayerActions.play())
     } else {
-      dispatch(PlayerActions.load(artist.populars[0], artist.populars, null, artist.id))
+      dispatch(
+        PlayerActions.load(artist.populars[0], artist.populars, null, artist.id)
+      )
     }
   }
 
@@ -75,22 +71,13 @@ function ArtistDetail (props: ArtistDetailProps) {
     dispatch(PlayerActions.pause())
   }
 
-  useEffect(() => {
-    setArtist(null)
-
-    getArtistFilled(id, _artist => {
-      setArtist(_artist)
-      console.tron.log({ _artist })
-    })
-  }, [id])
-
   if (!artist) {
     return null
   }
 
   return (
     <>
-      <Container onContextMenu={e => e.preventDefault()}>
+      <Container onContextMenu={(e) => e.preventDefault()}>
         <Header height={308}>
           <div className="head">
             <div className="cover" onContextMenu={openPlaylistMenu}>
@@ -103,12 +90,15 @@ function ArtistDetail (props: ArtistDetailProps) {
               <div className="label">
                 <span>Artist</span>
                 <div className="check">
-                  <Spoticon name="check" size={12} color='white' />
+                  <Spoticon name="check" size={12} color="white" />
                 </div>
               </div>
-              <h2 className="title" onContextMenu={openPlaylistMenu}>{artist.name}</h2>
+              <h2 className="title" onContextMenu={openPlaylistMenu}>
+                {artist.name}
+              </h2>
               <div className="controls">
-                {currentArtist === artist.id && status === Player.status.PLAYING ? (
+                {currentArtist === artist.id &&
+                status === playerStatus.PLAYING ? (
                   <button className="play" onClick={handlePause}>
                     <span>Pause</span>
                   </button>
@@ -131,10 +121,13 @@ function ArtistDetail (props: ArtistDetailProps) {
               <div className="cover">
                 <img src={artist.picture && artist.picture.downloadURL} />
               </div>
-              <h2 className="title" onContextMenu={openPlaylistMenu}>{artist.name}</h2>
+              <h2 className="title" onContextMenu={openPlaylistMenu}>
+                {artist.name}
+              </h2>
             </div>
             <div className="controls">
-              {currentArtist === artist.id && status === Player.status.PLAYING ? (
+              {currentArtist === artist.id &&
+              status === playerStatus.PLAYING ? (
                 <button className="play" onClick={handlePause}>
                   <span>Pause</span>
                 </button>
@@ -158,7 +151,7 @@ function ArtistDetail (props: ArtistDetailProps) {
         <div className="title-section">
           <h2>Albums</h2>
         </div>
-        <GridItems data={artist.albums} />
+        <GridItems albums={artist.albums} />
       </Container>
       <MenuPlaylist
         open={playlistMenuOpen}
