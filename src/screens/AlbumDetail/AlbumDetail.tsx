@@ -29,7 +29,9 @@ function AlbumDetail(props: AlbumDetailProps) {
   const [creatorMenuPos, setCreatorMenuPos] = useState({ top: 0, left: 0 })
 
   const { id } = useParams<{ id: string }>()
-  const { data: album, isLoading } = useQuery('album', () => api.getAlbum(id))
+  const { data: album, isLoading } = useQuery(['album', id], () =>
+    api.getAlbum(id)
+  )
 
   const { headerFixed } = useAppSelector(({ app }) => app)
   const { currentAlbum, status } = useAppSelector(({ player }) => player)

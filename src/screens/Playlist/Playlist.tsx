@@ -16,9 +16,7 @@ import api from '~/services/api'
 import { useAppSelector } from '~/store'
 import { PlayerActions, playerStatus } from '~/store/ducks/player'
 
-type HomeProps = {}
-
-function Playlist(props: HomeProps) {
+function Playlist() {
   const dispatch = useDispatch()
   const [playlistMenuOpen, setPlaylistMenuOpen] = useState(false)
   const [playlistMenuPos, setPlaylistMenuPos] = useState({ top: 0, left: 0 })
@@ -29,7 +27,7 @@ function Playlist(props: HomeProps) {
   const { currentPlaylist, status } = useAppSelector(({ player }) => player)
 
   const { id } = useParams<{ id: string }>()
-  const { data: playlist, isLoading } = useQuery('playlist', () =>
+  const { data: playlist, isLoading } = useQuery(['playlist', id], () =>
     api.getPlaylist(id)
   )
 
@@ -74,9 +72,7 @@ function Playlist(props: HomeProps) {
     dispatch(PlayerActions.pause())
   }
 
-  if (!playlist) {
-    return null
-  }
+  if (isLoading || !playlist) return null
 
   return (
     <>

@@ -31,7 +31,9 @@ function ArtistDetail() {
   )
 
   const { id } = useParams<{ id: string }>()
-  const { data: artist, isLoading } = useQuery('album', () => api.getArtist(id))
+  const { data: artist, isLoading } = useQuery(['artist', id], () =>
+    api.getArtist(id)
+  )
 
   const handleContextMenu = (e: any) => {
     e.preventDefault()

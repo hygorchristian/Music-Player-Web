@@ -1,6 +1,6 @@
 import { createActions, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { Album, Music, PropertyTypes } from '~/types/Data'
+import { Music, PropertyTypes } from '~/types/Data'
 
 // Action Types & Creators
 
@@ -52,7 +52,7 @@ type PlayerState = {
   positionShown?: number
   volume: number
   currentArtistId?: string
-  currentAlbum?: Album
+  currentAlbum?: string
   currentPlaylist?: string
 }
 

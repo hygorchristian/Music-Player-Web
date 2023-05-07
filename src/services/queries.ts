@@ -7,7 +7,16 @@ query {
 }
 `
 
-export const getPlaylist = ''
+export const getPlaylist = `
+query GetPlaylists($id: ID!) {
+  Playlist (id: $id)  {
+    id
+    name
+    playlist_image
+    music_ids
+  }
+}
+`
 
 export const allAlbums = `
 query {
@@ -55,6 +64,27 @@ query GetAlbum($id: ID!) {
           id
           name
         }
+      }
+    }
+  }
+}
+`
+
+export const getMusic = `
+query GetMusic($id: ID!) {
+  Music (id: $id)  {
+    id
+    name
+    duration
+    album_id
+    music_url
+    Album {
+      id
+      name
+      cover_image
+      Artist {
+        id
+        name
       }
     }
   }

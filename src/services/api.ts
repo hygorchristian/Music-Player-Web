@@ -1,7 +1,15 @@
 import axios from 'axios'
 import ioc from '~/lib/ioc'
-import { Album, Artist, Playlist } from '~/types/Data'
-import { allAlbums, allArtists, getAlbum, getArtist, getPlaylist, getPlaylists } from './queries'
+import { Album, Artist, Music, Playlist } from '~/types/Data'
+import {
+  allAlbums,
+  allArtists,
+  getAlbum,
+  getArtist,
+  getMusic,
+  getPlaylist,
+  getPlaylists,
+} from './queries'
 
 class Api {
   private readonly api = axios.create({
@@ -59,14 +67,31 @@ class Api {
     const returnData = (result?.allPlaylists ?? []).map((data: any) =>
       adapter(data)
     )
+
     const viewModelBuilder = ioc.use('viewModels.playlist')
     return returnData.map(viewModelBuilder)
+  }
+
+  public async getMusic(id: string): Promise<Music> {
+    const result = await this.query<{ Music: any }>(getMusic, { id })
+    const adapter = ioc.use('adapters.music')
+    const returnData = adapter(result?.Music)
+    const viewModelBuilder = ioc.use('viewModels.music')
+    return viewModelBuilder(returnData)
   }
 
   public async getPlaylist(id: string): Promise<Playlist> {
     const result = await this.query<{ Playlist: any }>(getPlaylist, { id })
     const adapter = ioc.use('adapters.playlist')
     const returnData = adapter(result?.Playlist)
+
+    if (Array.isArray(returnData.music_ids) && returnData.music_ids.length) {
+      const musics = await Promise.all(
+        returnData.music_ids.map((id) => this.getMusic(id))
+      )
+      returnData.musics = musics
+    }
+
     const viewModelBuilder = ioc.use('viewModels.playlist')
     return viewModelBuilder(returnData)
   }
