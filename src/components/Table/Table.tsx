@@ -1,22 +1,22 @@
-// @ts-nocheck
+import React, { useEffect, useRef, useState } from 'react'
 
-import React, { useState, useRef, useEffect } from 'react'
-
-import { Container } from './styles'
-import Spoticon from '~/components/Spoticon'
+import { useDispatch } from 'react-redux'
 import ItemPlaylist from '~/components/ItemPlaylist'
-import { useDispatch, useSelector } from 'react-redux'
+import Spoticon from '~/components/Spoticon'
+import { useAppSelector } from '~/store'
 import { PlayerActions } from '~/store/ducks/player'
+import { Music } from '~/types/Data'
+import { Container } from './styles'
 
 type TableProps = {
-
+  musics: Music[]
 }
 
-function Table ({ musics }: TableProps) {
+function Table({ musics }: TableProps) {
   const [fav, setFav] = useState(false)
   const [top, setTop] = useState(0)
-  const { scrollTop } = useSelector(({ app }) => app)
-  const { currentSong } = useSelector(({ player }) => player)
+  const { scrollTop } = useAppSelector(({ app }) => app)
+  const { currentSong } = useAppSelector(({ player }) => player)
   const table = useRef(null)
   const dispatch = useDispatch()
 
@@ -71,8 +71,8 @@ function Table ({ musics }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {musics.map(music => (
-            <ItemPlaylist music={music} onPlay={handlePlay} />
+          {(musics || []).map((music) => (
+            <ItemPlaylist key={music.id} music={music} onPlay={handlePlay} />
           ))}
         </tbody>
       </table>

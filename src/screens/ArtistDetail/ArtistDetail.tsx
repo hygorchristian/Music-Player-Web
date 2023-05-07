@@ -1,45 +1,48 @@
 import React, { memo, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
-import Header from '~/components/Header'
+import Header from '~/components/Headers'
 
-import { useDispatch, useSelector } from 'react-redux'
-import SearchBar from '~/components/SearchBar'
-import { Container } from './styles'
-
+import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 import GridItems from '~/components/GridItems'
 import MenuCreator from '~/components/MenuCreator'
 import MenuPlaylist from '~/components/MenuPlaylist'
+import SearchBar from '~/components/SearchBar'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import TableMusicLabel from '~/components/TableMusicLabel'
+import api from '~/services/api'
+import { useAppSelector } from '~/store'
+import { Container } from './styles'
+
 import { PlayerActions, playerStatus } from '~/store/ducks/player'
 
-type ArtistDetailProps = {}
-
-function ArtistDetail(props: ArtistDetailProps) {
+function ArtistDetail() {
   const dispatch = useDispatch()
 
   const [playlistMenuOpen, setPlaylistMenuOpen] = useState(false)
   const [playlistMenuPos, setPlaylistMenuPos] = useState({ top: 0, left: 0 })
   const [creatorMenuOpen, setCreatorMenuOpen] = useState(false)
   const [creatorMenuPos, setCreatorMenuPos] = useState({ top: 0, left: 0 })
-  const [artist, setArtist] = useState(null)
 
-  const { headerFixed } = useSelector(({ app }) => app)
-  const { currentArtist, status } = useSelector(({ player }) => player)
+  const { headerFixed } = useAppSelector(({ app }) => app)
+  const { currentArtistId: currentArtist, status } = useAppSelector(
+    ({ player }) => player
+  )
 
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
+  const { data: artist, isLoading } = useQuery('album', () => api.getArtist(id))
 
-  const handleContextMenu = (e) => {
+  const handleContextMenu = (e: any) => {
     e.preventDefault()
   }
 
-  const handleClickAway = (e) => {
+  const handleClickAway = (e: any) => {
     setPlaylistMenuOpen(false)
     setCreatorMenuOpen(false)
   }
 
-  const openPlaylistMenu = (e) => {
+  const openPlaylistMenu = (e: any) => {
     const pos = {
       left: e.clientX,
       top: e.clientY,
@@ -48,7 +51,7 @@ function ArtistDetail(props: ArtistDetailProps) {
     setPlaylistMenuPos(pos)
   }
 
-  const openCreatorMenu = (e) => {
+  const openCreatorMenu = (e: any) => {
     const pos = {
       left: e.clientX,
       top: e.clientY,
@@ -58,11 +61,17 @@ function ArtistDetail(props: ArtistDetailProps) {
   }
 
   const handleArtistPlay = () => {
+    if (!artist) return
     if (currentArtist === artist.id) {
       dispatch(PlayerActions.play())
-    } else {
+    } else if (artist?.populars?.length) {
       dispatch(
-        PlayerActions.load(artist.populars[0], artist.populars, null, artist.id)
+        PlayerActions.load(
+          artist?.populars?.[0],
+          artist.populars,
+          null,
+          artist.id
+        )
       )
     }
   }
@@ -71,17 +80,17 @@ function ArtistDetail(props: ArtistDetailProps) {
     dispatch(PlayerActions.pause())
   }
 
-  if (!artist) {
+  if (!artist || isLoading) {
     return null
   }
 
   return (
     <>
-      <Container onContextMenu={(e) => e.preventDefault()}>
+      <Container onContextMenu={(e: any) => e.preventDefault()}>
         <Header height={308}>
           <div className="head">
             <div className="cover" onContextMenu={openPlaylistMenu}>
-              <img src={artist.picture && artist.picture.downloadURL} />
+              <img src={artist.artist_image} />
               <div className="overlay">
                 <Spoticon name="edit" size={60} color="white" />
               </div>
@@ -119,7 +128,7 @@ function ArtistDetail(props: ArtistDetailProps) {
           <div className="subhead">
             <div className="info">
               <div className="cover">
-                <img src={artist.picture && artist.picture.downloadURL} />
+                <img src={artist.artist_image} />
               </div>
               <h2 className="title" onContextMenu={openPlaylistMenu}>
                 {artist.name}
@@ -147,28 +156,28 @@ function ArtistDetail(props: ArtistDetailProps) {
         </Header>
         {headerFixed && <div className="extra-size" />}
         <SearchBar />
-        <TableMusicLabel label="Popular" musics={artist.populars} />
+        <TableMusicLabel label="Popular" musics={artist.populars || []} />
         <div className="title-section">
           <h2>Albums</h2>
         </div>
-        <GridItems albums={artist.albums} />
+        <GridItems albums={artist.albums || []} />
       </Container>
       <MenuPlaylist
         open={playlistMenuOpen}
         position={playlistMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
-          handleClickAway()
+          handleClickAway(e)
         }}
       />
       <MenuCreator
         open={creatorMenuOpen}
         position={creatorMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
-          handleClickAway()
+          handleClickAway(e)
         }}
       />
     </>

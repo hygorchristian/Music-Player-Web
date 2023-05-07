@@ -1,13 +1,13 @@
-// @ts-nocheck
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { ReactSVG } from 'react-svg'
 
 import { ExpandMore } from '@material-ui/icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import ItemMainMenu from '~/components/ItemMainMenu'
 import LibraryList from '~/components/LibraryList'
 import { ThumbButton } from '~/components/Playbar/styles'
 import PlaylistList from '~/components/PlaylistList'
+import { useAppSelector } from '~/store'
 import { AppActions } from '~/store/ducks/app'
 import { Container, Scroll, Thumb } from './styles'
 
@@ -15,9 +15,8 @@ type NavbarProps = {}
 
 function Navbar(props: NavbarProps) {
   const dispatch = useDispatch()
-  const { thumbInBottom, menuSelected } = useSelector(({ app }) => app)
-  const { currentSong } = useSelector(({ player }) => player)
-  const [coverImg, setCoverImg] = useState(null)
+  const { thumbInBottom, menuSelected } = useAppSelector(({ app }) => app)
+  const { currentSong } = useAppSelector(({ player }) => player)
 
   const handleContext = (e: MouseEvent) => {
     e.preventDefault()
@@ -74,7 +73,7 @@ function Navbar(props: NavbarProps) {
         <span>New Playlist</span>
       </div>
       <div className={`thumbnail ${thumbInBottom && 'hide'}`}>
-        <img src={coverImg} />
+        <img src={currentSong?.album?.cover_image} />
         <ThumbButton size="small" color="primary" onClick={toggleThumb}>
           <ExpandMore style={{ fontSize: 14 }} />
         </ThumbButton>

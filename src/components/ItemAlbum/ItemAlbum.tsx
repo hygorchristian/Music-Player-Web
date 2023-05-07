@@ -50,7 +50,7 @@ function ItemAlbum({ album, ...props }: ItemAlbumProps) {
     <>
       <Container width={itemSize}>
         <div className="image">
-          <img src={album.coverURL} />
+          <img src={album.cover_image} />
           <div
             className="overlay"
             onClick={handleDetails}

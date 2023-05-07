@@ -1,19 +1,20 @@
-// @ts-nocheck
-
-import React, { memo, useState } from 'react'
+import React, { memo, MouseEventHandler, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Header from '~/components/Header'
+import Header from '~/components/Headers'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import SearchBar from '~/components/SearchBar'
 import Table from '~/components/Table'
 import { secondsToHours } from '~/utils/time'
 import { Container } from './styles'
 
+import { useQuery } from 'react-query'
 import MenuCreator from '~/components/MenuCreator'
 import MenuPlaylist from '~/components/MenuPlaylist'
 import Spoticon from '~/components/Spoticon/Spoticon'
-import { PlayerActions } from '~/store/ducks/player'
+import api from '~/services/api'
+import { useAppSelector } from '~/store'
+import { PlayerActions, playerStatus } from '~/store/ducks/player'
 
 type HomeProps = {}
 
@@ -24,39 +25,42 @@ function Playlist(props: HomeProps) {
   const [creatorMenuOpen, setCreatorMenuOpen] = useState(false)
   const [creatorMenuPos, setCreatorMenuPos] = useState({ top: 0, left: 0 })
 
-  const { headerFixed } = useSelector(({ app }) => app)
-  const { currentPlaylist, status } = useSelector(({ player }) => player)
-  const [playlist, setPlaylist] = useState(null)
-  const { id } = useParams()
+  const { headerFixed } = useAppSelector(({ app }) => app)
+  const { currentPlaylist, status } = useAppSelector(({ player }) => player)
 
-  const handleContextMenu = (e) => {
+  const { id } = useParams<{ id: string }>()
+  const { data: playlist, isLoading } = useQuery('playlist', () =>
+    api.getPlaylist(id)
+  )
+
+  const handleContextMenu: MouseEventHandler = (e) => {
     e.preventDefault()
   }
 
-  const handleClickAway = (e) => {
+  const handleClickAway: MouseEventHandler = (e) => {
     setPlaylistMenuOpen(false)
     setCreatorMenuOpen(false)
   }
 
-  const openPlaylistMenu = (e) => {
-    const pos = {
+  const openPlaylistMenu: MouseEventHandler = (e) => {
+    setPlaylistMenuOpen(true)
+    setPlaylistMenuPos({
       left: e.clientX,
       top: e.clientY,
-    }
-    setPlaylistMenuOpen(true)
-    setPlaylistMenuPos(pos)
+    })
   }
 
-  const openCreatorMenu = (e) => {
-    const pos = {
+  const openCreatorMenu: MouseEventHandler = (e) => {
+    setCreatorMenuOpen(true)
+    setCreatorMenuPos({
       left: e.clientX,
       top: e.clientY,
-    }
-    setCreatorMenuOpen(true)
-    setCreatorMenuPos(pos)
+    })
   }
 
   const handlePlaylistPlay = () => {
+    if (!playlist) return
+
     if (currentPlaylist === playlist.id) {
       dispatch(PlayerActions.play())
     } else {
@@ -76,11 +80,11 @@ function Playlist(props: HomeProps) {
 
   return (
     <>
-      <Container onContextMenu={(e) => e.preventDefault()}>
+      <Container onContextMenu={(e: any) => e.preventDefault()}>
         <Header height={308}>
           <div className="head">
             <div className="cover" onContextMenu={openPlaylistMenu}>
-              <img src={playlist.cover.downloadURL} />
+              <img src={playlist.playlist_image} />
               <div className="overlay">
                 <Spoticon name="edit" size={60} color="white" />
               </div>
@@ -95,7 +99,7 @@ function Playlist(props: HomeProps) {
                 <a onContextMenu={openCreatorMenu}>{playlist.creator}</a> •{' '}
                 {playlist.musics.length}{' '}
                 {playlist.musics.length > 1 ? 'songs' : 'song'},{' '}
-                {secondsToHours(playlist.playlistDuration)}
+                {secondsToHours(playlist.playlist_duration)}
               </p>
               <div className="controls">
                 {currentPlaylist === playlist.id &&
@@ -117,7 +121,7 @@ function Playlist(props: HomeProps) {
           <div className="subhead">
             <div className="info">
               <div className="cover">
-                <img src={playlist.cover.downloadURL} />
+                <img src={playlist.playlist_image} />
               </div>
               <h2 className="title" onContextMenu={openPlaylistMenu}>
                 {playlist.name}
@@ -148,18 +152,18 @@ function Playlist(props: HomeProps) {
         open={playlistMenuOpen}
         position={playlistMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
-          handleClickAway()
+          handleClickAway(e)
         }}
       />
       <MenuCreator
         open={creatorMenuOpen}
         position={creatorMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
-          handleClickAway()
+          handleClickAway(e)
         }}
       />
     </>

@@ -1,17 +1,16 @@
-// @ts-nocheck
-
 import React, { useEffect, useState } from 'react'
 
-import { Container } from './styles'
 import ItemArtist from '~/components/ItemArtist'
-import { useTabletMode, useWindowSize } from '~/hooks/index'
-import { getItemsPerRow, getItemWidth } from '~/utils/dev'
+import { useWindowSize } from '~/hooks/index'
+import { Artist } from '~/types/Data'
+import { getItemsPerRow } from '~/utils/dev'
+import { Container } from './styles'
 
 type GridArtistsProps = {
-
+  data: Artist[]
 }
 
-function GridArtists ({ data, ...props }: GridArtistsProps) {
+function GridArtists({ data }: GridArtistsProps) {
   const { width } = useWindowSize()
   const [itemsPerRow, setItemsPerRow] = useState(getItemsPerRow(width))
 
@@ -20,8 +19,8 @@ function GridArtists ({ data, ...props }: GridArtistsProps) {
   }, [width])
 
   return (
-    <Container itemsPerRow={itemsPerRow} >
-      {data.map(item => (
+    <Container itemsPerRow={itemsPerRow}>
+      {data.map((item) => (
         <ItemArtist key={item.id} data={item} />
       ))}
     </Container>

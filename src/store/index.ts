@@ -1,3 +1,4 @@
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
@@ -40,3 +41,5 @@ sagaMiddleware.run(sagas)
 export { store, persistor }
 
 export type RootState = ReturnType<typeof persistedReducer>
+
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

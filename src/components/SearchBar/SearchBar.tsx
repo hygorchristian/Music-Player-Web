@@ -8,7 +8,7 @@ import Switch from '~/components/Switch'
 import { Container } from './styles'
 
 type SearchBarProps = {
-  noDownload: boolean
+  noDownload?: boolean
 }
 
 function SearchBar({ noDownload, ...props }: SearchBarProps) {

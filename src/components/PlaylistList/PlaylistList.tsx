@@ -1,10 +1,12 @@
-// @ts-nocheck
-
-import React, { memo, useState } from 'react'
+import React, { memo, MouseEventHandler, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux'
+import clsx from 'clsx'
+import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux'
 import MenuPlaylist from '~/components/MenuPlaylist'
+import api from '~/services/api'
+import { useAppSelector } from '~/store'
 import { AppActions } from '~/store/ducks/app'
 import { Container, ItemContainer } from './styles'
 
@@ -21,36 +23,41 @@ type PlaylistItemProps = {
 
 function PlaylistItem({ selected, label, ...props }: PlaylistItemProps) {
   return (
-    <ItemContainer className={selected && 'selected'} {...props}>
+    <ItemContainer className={clsx({ selected })} {...props}>
       {selected && <div className="indicator" />}
       <span>{label}</span>
     </ItemContainer>
   )
 }
 
-function PlaylistList(props: PlaylistListProps) {
+function PlaylistList() {
   const [playlistMenuOpen, setPlaylistMenuOpen] = useState(false)
   const [playlistMenuPos, setPlaylistMenuPos] = useState({ top: 0, left: 0 })
 
   const history = useHistory()
   const dispatch = useDispatch()
-  const { menuSelected } = useSelector(({ app }) => app)
-  const playlists = []
+  const { menuSelected } = useAppSelector(({ app }) => app)
 
-  const selectMenu = (name) => {
+  const { data: playlists, isLoading } = useQuery('playlists', () =>
+    api.getPlaylists()
+  )
+
+  console.log(playlists)
+
+  const selectMenu = (name: string) => {
     dispatch(AppActions.setMenuSelected(`@playlist/${name}`))
     history.push(`/playlist/${name}`)
   }
 
-  const handleContextMenu = (e: MouseEvent) => {
+  const handleContextMenu: MouseEventHandler = (e) => {
     e.preventDefault()
   }
 
-  const handleClickAway = () => {
+  const handleClickAway: MouseEventHandler = () => {
     setPlaylistMenuOpen(false)
   }
 
-  const openPlaylistMenu = (e: HandleMenuInterface) => {
+  const openPlaylistMenu: any = (e: any) => {
     const pos = {
       left: e.clientX,
       top: e.clientY,
@@ -59,14 +66,19 @@ function PlaylistList(props: PlaylistListProps) {
     setPlaylistMenuPos(pos)
   }
 
+  if (isLoading || !playlists) return null
+
+  console.log({ playlists })
+
   return (
     <>
       <Container>
         <h2>Playlists</h2>
         <ul>
-          {playlists.map((playlist) => (
+          {(playlists ?? []).map((playlist) => (
             <PlaylistItem
               key={playlist.id}
+              // @ts-expect-error
               onContextMenu={openPlaylistMenu}
               onClick={() => selectMenu(playlist.id)}
               selected={menuSelected === `@playlist/${playlist.id}`}
@@ -79,9 +91,9 @@ function PlaylistList(props: PlaylistListProps) {
         open={playlistMenuOpen}
         position={playlistMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
-          handleClickAway()
+          handleClickAway(e)
         }}
       />
     </>

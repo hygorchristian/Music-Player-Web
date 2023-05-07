@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { useTabletMode } from '~/hooks'
-import { RootState } from '~/store'
+import { useAppSelector } from '~/store'
 import { AppActions } from '~/store/ducks/app'
 import Search from './Search'
 import { Container } from './styles'
@@ -16,7 +16,7 @@ function Header({
 }) {
   const dispatch = useDispatch()
 
-  const { scrollTop, headerFixed } = useSelector(({ app }: RootState) => app)
+  const { scrollTop, headerFixed } = useAppSelector(({ app }) => app)
   const { isTablet } = useTabletMode()
   const [bottom, setBottom] = useState(500)
 

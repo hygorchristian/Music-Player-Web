@@ -1,25 +1,31 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Spoticon from '~/components/Spoticon/Spoticon'
+import { useAppSelector } from '~/store'
 import { PlayerActions, playerStatus } from '~/store/ducks/player'
+import { Music } from '~/types/Data'
 import { secondsToMin } from '~/utils/time'
 import { Container } from './styles'
 
-type ItemPlaylistProps = {}
+type ItemPlaylistProps = {
+  music: Music
+  onPlay: (music: Music) => void
+}
 
 function ItemPlaylist({ music, onPlay }: ItemPlaylistProps) {
   const [fav, setFav] = useState(false)
-  const [artist, setArtist] = useState(null)
-  const [album, setAlbum] = useState(null)
-  const { currentSong, status } = useSelector(({ player }) => player)
+  const { currentSong, status } = useAppSelector(({ player }) => player)
   const dispatch = useDispatch()
   const history = useHistory()
 
   const pause = () => {
     dispatch(PlayerActions.pause())
   }
+
+  const album = music?.album
+  const artist = album?.artist
 
   return (
     <Container

@@ -1,18 +1,22 @@
-// @ts-nocheck
+import React, { memo } from 'react'
+import Header from '~/components/Headers'
 
-import React, { memo, useState } from 'react'
-import Header from '~/components/Header'
-
-import { useSelector } from 'react-redux'
+import { useQuery } from 'react-query'
 import GridArtists from '~/components/GridArtists'
 import SearchBar from '~/components/SearchBar'
+import api from '~/services/api'
+import { useAppSelector } from '~/store'
 import { Container } from './styles'
 
 type ArtistsProps = {}
 
 function Artists(props: ArtistsProps) {
-  const { headerFixed } = useSelector(({ app }) => app)
-  const [albums, setAlbums] = useState([])
+  const { headerFixed } = useAppSelector(({ app }) => app)
+  const { data: artists, isLoading } = useQuery('artists', () =>
+    api.getArtists()
+  )
+
+  if (isLoading || !artists) return null
 
   return (
     <Container onContextMenu={(e) => e.preventDefault()}>
@@ -26,7 +30,7 @@ function Artists(props: ArtistsProps) {
       </Header>
       {headerFixed && <div className="extra-size" />}
       <SearchBar noDownload />
-      <GridArtists data={albums} />
+      <GridArtists data={artists} />
     </Container>
   )
 }

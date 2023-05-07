@@ -1,22 +1,19 @@
-// @ts-nocheck
-
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container, ItemContainer } from './styles'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '~/store'
 import { AppActions } from '~/store/ducks/app'
-import { useDispatch, useSelector } from 'react-redux'
+import { Container, ItemContainer } from './styles'
 
-type LibraryListProps = {
-
-}
+type LibraryListProps = {}
 
 type ItemLibraryProps = {
-  label: String,
-  selected: Boolean,
+  label: String
+  selected: Boolean
 }
 
-function ItemLibrary ({ label, selected, ...props }: ItemLibraryProps) {
+function ItemLibrary({ label, selected, ...props }: ItemLibraryProps) {
   return (
     <ItemContainer className={selected && 'selected'} {...props}>
       {selected && <div className="indicator" />}
@@ -25,10 +22,10 @@ function ItemLibrary ({ label, selected, ...props }: ItemLibraryProps) {
   )
 }
 
-function LibraryList (props: LibraryListProps) {
+function LibraryList(props: LibraryListProps) {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { menuSelected } = useSelector(({ app }) => app)
+  const { menuSelected } = useAppSelector(({ app }) => app)
 
   const selectMenu = (name) => {
     dispatch(AppActions.setMenuSelected(name))

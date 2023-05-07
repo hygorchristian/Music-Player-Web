@@ -1,15 +1,14 @@
 import React, { memo } from 'react'
-import Header from '~/components/Header'
-
 import { useQuery } from 'react-query'
-import { useSelector } from 'react-redux'
 import GridItems from '~/components/GridItems'
+import Header from '~/components/Headers'
 import SearchBar from '~/components/SearchBar'
 import api from '~/services/api'
+import { useAppSelector } from '~/store'
 import { Container } from './styles'
 
 function Albums() {
-  const { headerFixed } = useSelector(({ app }) => app)
+  const { headerFixed } = useAppSelector(({ app }) => app)
   const { data: albums, isLoading } = useQuery('albums', () => api.getAlbums())
 
   if (isLoading || !albums) return <div>loading...</div>

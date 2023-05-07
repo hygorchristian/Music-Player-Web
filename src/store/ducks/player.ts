@@ -1,6 +1,6 @@
 import { createActions, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { PropertyTypes } from '~/types/Data'
+import { Album, Music, PropertyTypes } from '~/types/Data'
 
 // Action Types & Creators
 
@@ -14,8 +14,6 @@ const { Types, Creators } = createActions({
   handlePosition: ['percent'],
   setPosition: ['percent'],
   setVolume: ['volume'],
-  currentAlbum: null,
-  currentPlaylist: null,
 })
 
 export const PlayerTypes = Types
@@ -37,28 +35,33 @@ export const INITIAL_STATE = Immutable({
   duration: null,
   positionShown: null,
   volume: 100,
+  currentArtistId: null,
+  currentAlbum: null,
+  currentPlaylist: null,
 })
 
 type Status = PropertyTypes<typeof playerStatus>
 
 type PlayerState = {
-  currentSong: any
+  currentSong: Music
+  currentArtist: string
   status: Status
   list: any[]
   position: number
   duration: number
   positionShown?: number
   volume: number
-  currentPlaylist?: any
-  currentAlbum?: any
+  currentArtistId?: string
+  currentAlbum?: Album
+  currentPlaylist?: string
 }
 
 // Action Interfaces
 
 interface LoadAction {
   type: typeof PlayerTypes.LOAD
-  song: any // Replace with the actual song type
-  list: any[] // Replace with the actual list type
+  song: Music // Replace with the actual song type
+  list: Music[] // Replace with the actual list type
   playlist: any // Replace with the actual playlist type
   album: any // Replace with the actual album type
 }

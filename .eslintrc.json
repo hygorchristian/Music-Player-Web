@@ -24,6 +24,8 @@
     "space-before-function-paren": "off",
     "no-unused-vars": "off",
     "indent": "off",
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "no-use-before-define": "off",
+    "standard/no-callback-literal": "off"
   }
 }

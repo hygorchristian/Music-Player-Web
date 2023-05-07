@@ -1,19 +1,18 @@
-// @ts-nocheck
-
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Container } from './styles'
-import { getItemWidth } from '~/utils/dev'
-import { useTabletMode, useWindowSize } from '~/hooks'
-import Spoticon from '~/components/Spoticon/Spoticon'
 import MenuAlbum from '~/components/MenuAlbum'
+import Spoticon from '~/components/Spoticon/Spoticon'
+import { useWindowSize } from '~/hooks'
+import { Artist } from '~/types/Data'
+import { getItemWidth } from '~/utils/dev'
+import { Container } from './styles'
 
 type ItemArtistProps = {
-
+  data: Artist
 }
 
-function ItemArtist ({ data, ...props }: ItemArtistProps) {
+function ItemArtist({ data }: ItemArtistProps) {
   const { width } = useWindowSize()
   const history = useHistory()
 
@@ -36,7 +35,7 @@ function ItemArtist ({ data, ...props }: ItemArtistProps) {
   const openAlbumMenu = (e: HandleMenuInterface) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setAlbumMenuOpen(true)
     setAlbumMenuPos(pos)
@@ -50,9 +49,13 @@ function ItemArtist ({ data, ...props }: ItemArtistProps) {
     <>
       <Container width={itemSize}>
         <div className="image">
-          <img src={data.picture.downloadURL}/>
+          <img src={data.artist_image} />
 
-          <div className="overlay" onClick={handleDetails} onContextMenu={openAlbumMenu}>
+          <div
+            className="overlay"
+            onClick={handleDetails}
+            onContextMenu={openAlbumMenu}
+          >
             <button>
               <Spoticon name="heart-solid" size={18} color="white" />
             </button>
@@ -65,7 +68,9 @@ function ItemArtist ({ data, ...props }: ItemArtistProps) {
           </div>
         </div>
         <div className="info">
-          <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>{data.name}</h4>
+          <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>
+            {data.name}
+          </h4>
         </div>
       </Container>
       <MenuAlbum
