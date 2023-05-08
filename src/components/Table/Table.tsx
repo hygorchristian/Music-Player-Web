@@ -20,7 +20,7 @@ function Table({ musics }: TableProps) {
   const table = useRef(null)
   const dispatch = useDispatch()
 
-  const handlePlay = (music) => {
+  const handlePlay = (music: Music) => {
     if (currentSong && currentSong.id === music.id) {
       dispatch(PlayerActions.play())
     } else {
@@ -29,7 +29,9 @@ function Table({ musics }: TableProps) {
   }
 
   useEffect(() => {
-    const _top = table.current && table.current.getBoundingClientRect().top
+    const _top =
+      // @ts-expect-error
+      (table.current && table.current.getBoundingClientRect().top) ?? 0
     setTop(_top)
   }, [scrollTop])
 

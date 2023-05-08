@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import clsx from 'clsx'
 import { useDispatch } from 'react-redux'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import { useAppSelector } from '~/store'
@@ -30,7 +31,7 @@ function ItemPlaylist({ music, onPlay }: ItemPlaylistProps) {
   return (
     <Container
       key={music.id}
-      className={currentSong && currentSong.id === music.id && 'playing'}
+      className={clsx({ playing: currentSong?.id === music.id })}
     >
       <td className="button" align="center">
         {currentSong &&

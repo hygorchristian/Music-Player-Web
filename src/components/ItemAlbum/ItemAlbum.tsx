@@ -46,6 +46,10 @@ function ItemAlbum({ album, ...props }: ItemAlbumProps) {
     setItemSize(getItemWidth(width))
   }, [width])
 
+  const artist = album.artist
+
+  if (!artist) return null
+
   return (
     <>
       <Container width={itemSize}>
@@ -71,8 +75,8 @@ function ItemAlbum({ album, ...props }: ItemAlbumProps) {
           <h4 onClick={handleDetails} onContextMenu={openAlbumMenu}>
             {album.name}
           </h4>
-          <p onClick={() => history.push(`/artist/${album.artist.id}`)}>
-            {album.artist.name}
+          <p onClick={() => history.push(`/artist/${artist.id}`)}>
+            {artist.name}
           </p>
         </div>
       </Container>

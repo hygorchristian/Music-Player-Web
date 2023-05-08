@@ -19,7 +19,7 @@ function Artists(props: ArtistsProps) {
   if (isLoading || !artists) return null
 
   return (
-    <Container onContextMenu={(e) => e.preventDefault()}>
+    <Container onContextMenu={(e: any) => e.preventDefault()}>
       <Header height={210}>
         <div className="head">
           <h1>Artists</h1>

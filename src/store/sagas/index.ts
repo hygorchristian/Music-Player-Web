@@ -1,6 +1,7 @@
-import { all, takeLatest } from 'redux-saga/effects'
+// @ts-nocheck
+import { all } from 'redux-saga/effects'
 
-export default function * () {
+export default function* () {
   return yield all([
     // takeLatest()
   ])

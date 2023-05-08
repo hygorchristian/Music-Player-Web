@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import MenuAlbum from '~/components/MenuAlbum'
@@ -24,7 +24,7 @@ function ItemArtist({ data }: ItemArtistProps) {
     history.push(`/artist/${data.id}`)
   }
 
-  const handleContextMenu = (e: MouseEvent) => {
+  const handleContextMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
   }
 
@@ -32,7 +32,7 @@ function ItemArtist({ data }: ItemArtistProps) {
     setAlbumMenuOpen(false)
   }
 
-  const openAlbumMenu = (e: HandleMenuInterface) => {
+  const openAlbumMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     const pos = {
       left: e.clientX,
       top: e.clientY,
@@ -77,7 +77,7 @@ function ItemArtist({ data }: ItemArtistProps) {
         open={albumMenuOpen}
         position={albumMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
           handleClickAway()
         }}
