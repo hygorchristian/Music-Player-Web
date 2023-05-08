@@ -2,10 +2,15 @@ import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
 
-  @font-face {
+@font-face {
     font-family: "spoticon";
     src: url("/fonts/spoticon.ttf") format("ttf");
     src: url("/fonts/spoticon.woff2") format("woff2");
+  }
+
+  @font-face {
+    font-family: "proxima-nova";
+    src: url("/fonts/proxima-nova.otf") format("otf");
   }
 
   *{
@@ -24,7 +29,7 @@ export default createGlobalStyle`
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale;
-    font-family: proxima-nova, sans-serif;
+    font-family: 'proxima-nova', sans-serif;
     background: #181818;
     color: #ffffff;
     user-select: none;

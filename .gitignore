@@ -18,8 +18,16 @@
 .env.test.local
 .env.production.local
 
+public/tmp/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 
 .idea
+
+
+musicFeed/*
+
+.env

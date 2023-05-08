@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
 import { withSnackbar } from 'notistack'
+import { useEffect, useState } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '~/store'
 import { NotistackActions } from './duck'
 
-function Notifier ({ enqueueSnackbar }) {
+function Notifier({ enqueueSnackbar }) {
   const [displayed, setDisplayed] = useState([])
 
   const dispatch = useDispatch()
-  const notifications = useSelector((state) => state.notistack.notifications)
+  const notifications = useAppSelector((state) => state.notistack.notifications)
 
   const updateNotifications = () => {
     notifications.forEach((notification) => {

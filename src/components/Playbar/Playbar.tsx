@@ -1,25 +1,32 @@
-// @ts-nocheck
-import React, { useState, memo, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Container, Controls, ThumbButton, Slider, SideControls, Button } from './styles'
-import MenuAuthor from '~/components/MenuAuthor'
-import Sound from 'react-sound'
-import MenuTitle from '~/components/MenuTitle'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppActions } from '~/store/ducks/app'
 import { ExpandLess } from '@material-ui/icons'
+import clsx from 'clsx'
+import React, { memo, MouseEventHandler, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import Sound from 'react-sound'
+import MenuAuthor from '~/components/MenuAuthor'
+import MenuTitle from '~/components/MenuTitle'
 import Spoticon from '~/components/Spoticon/Spoticon'
 import { usePlayer } from '~/hooks/player'
-import { PlayerActions } from '~/store/ducks/player'
-import { getAlbum, getAlbumCover, getArtist } from '~/services/firebase'
+import useFullscreenStatus from '~/hooks/useFullscreen'
+import { useAppSelector } from '~/store'
+import { AppActions } from '~/store/ducks/app'
+import { PlayerActions, playerStatus } from '~/store/ducks/player'
+import toggleFullscreen from '~/utils/fullscreen'
+import {
+  Button,
+  Container,
+  Controls,
+  SideControls,
+  Slider,
+  ThumbButton,
+} from './styles'
 
-type PlaybarProps = {
-
-}
+type PlaybarProps = {}
 
 const SM_ICON = 16
 
-function Playbar (props: PlaybarProps) {
+function Playbar(props: PlaybarProps) {
   const dispatch = useDispatch()
   const history = useHistory()
   const [titleMenuOpen, setTitleMenuOpen] = useState(false)
@@ -27,37 +34,41 @@ function Playbar (props: PlaybarProps) {
   const [authorMenuOpen, setAuthorMenuOpen] = useState(false)
   const [authorMenuPos, setAuthorMenuPos] = useState({ top: 0, left: 0 })
   const [muted, setMuted] = useState(false)
-  const [coverImg, setCoverImg] = useState(null)
-  const [artist, setArtist] = useState(null)
+  const isFullscreen = useFullscreenStatus()
 
   const [shuffle, setShuffle] = useState(false)
   const [repeatState, setRepeatState] = useState(0)
 
-  const { thumbInBottom } = useSelector(({ app }) => app)
-  const { currentSong, status, position: playerPosition, volume } = useSelector(({ player }) => player)
+  const { thumbInBottom } = useAppSelector(({ app }) => app)
+  const {
+    currentSong,
+    status,
+    position: playerPosition,
+    volume,
+  } = useAppSelector(({ player }) => player)
   const { position, duration, positionShown, progress } = usePlayer()
 
   const toggleThumb = () => {
     dispatch(AppActions.toggleThumb())
   }
 
-  const handleContextMenu = (event: MouseEvent) => {
+  const handleContextMenu: MouseEventHandler<HTMLDivElement> = (event) => {
     event && event.preventDefault()
   }
 
-  const openTitleMenu = (e: HandleMenuInterface) => {
+  const openTitleMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setTitleMenuOpen(true)
     setTitleMenuPos(pos)
   }
 
-  const openAuthorMenu = (e: HandleMenuInterface) => {
+  const openAuthorMenu: MouseEventHandler<HTMLDivElement> = (e) => {
     const pos = {
       left: e.clientX,
-      top: e.clientY
+      top: e.clientY,
     }
     setAuthorMenuOpen(true)
     setAuthorMenuPos(pos)
@@ -88,25 +99,38 @@ function Playbar (props: PlaybarProps) {
   }
 
   useEffect(() => {
-    if (currentSong) {
-      getAlbumCover(currentSong.album_id, cover => setCoverImg(cover))
+    navigator.mediaSession.setActionHandler('play', () => alert('play'))
+    navigator.mediaSession.setActionHandler('pause', () => alert('pause'))
+    navigator.mediaSession.setActionHandler('seekbackward', () =>
+      alert('seekbackward')
+    )
+    navigator.mediaSession.setActionHandler('seekforward', () =>
+      alert('seekforward')
+    )
+    navigator.mediaSession.setActionHandler('previoustrack', () =>
+      alert('previoustrack')
+    )
+    navigator.mediaSession.setActionHandler('nexttrack', () =>
+      alert('nexttrack')
+    )
+  }, [])
 
-      getAlbum(currentSong.album_id, _album => {
-        getArtist(_album.artist_id, _artist => {
-          setArtist(_artist)
-        })
-      })
-    }
-  }, [currentSong])
+  const album = currentSong?.album
+  const artist = album?.artist
+
+  if (!currentSong || !album || !artist) return null
 
   return (
     <>
-      { !!currentSong && (
+      {!!currentSong && (
         <Sound
-          url={currentSong.file.downloadURL}
+          url={currentSong.music_url}
           playStatus={status}
           onFinishedPlaying={() => dispatch(PlayerActions.next())}
-          onPlaying={({ position, duration }) => dispatch(PlayerActions.playing(position, duration))}
+          // @ts-expect-error
+          onPlaying={({ position, duration }) =>
+            dispatch(PlayerActions.playing(position, duration))
+          }
           onLoad={() => {}}
           position={playerPosition}
           volume={muted ? 0 : volume}
@@ -114,13 +138,13 @@ function Playbar (props: PlaybarProps) {
       )}
       <Container onContextMenu={handleContextMenu}>
         <div className="music">
-          {!!currentSong && <div className={`thumbnail ${!thumbInBottom && 'hide'}`}>
-            <img src={coverImg} />
+          <div className={`thumbnail ${!thumbInBottom && 'hide'}`}>
+            <img src={album.cover_image} />
             <ThumbButton size="small" color="primary" onClick={toggleThumb}>
               <ExpandLess style={{ fontSize: 14 }} />
             </ThumbButton>
-          </div>}
-          {!!currentSong && <div className={`music-info ${!thumbInBottom && 'hide'}`}>
+          </div>
+          <div className={`music-info ${!thumbInBottom && 'hide'}`}>
             <div className="music-title">
               <div className="title" onContextMenu={openTitleMenu}>
                 <span>{currentSong.name}</span>
@@ -136,25 +160,34 @@ function Playbar (props: PlaybarProps) {
             >
               <span>{artist && artist.name}</span>
             </div>
-          </div>}
+          </div>
         </div>
         <Controls>
           <div className="buttons">
-            <Button className={shuffle && 'active'} onClick={() => setShuffle(!shuffle)}>
+            <Button
+              className={clsx({ active: shuffle })}
+              onClick={() => setShuffle(!shuffle)}
+            >
               <div className="dot" />
               <Spoticon name="shuffle" size={SM_ICON} />
             </Button>
             <Button onClick={() => dispatch(PlayerActions.prev())}>
               <Spoticon name="prev" size={SM_ICON} />
             </Button>
-            {status === Sound.status.PLAYING ? (
-              <Button className="large" onClick={() => dispatch(PlayerActions.pause())}>
+            {status === playerStatus.PLAYING ? (
+              <Button
+                className="large"
+                onClick={() => dispatch(PlayerActions.pause())}
+              >
                 <div className="control">
                   <Spoticon name="pause" size={SM_ICON} />
                 </div>
               </Button>
             ) : (
-              <Button className="large" onClick={() => dispatch(PlayerActions.play())}>
+              <Button
+                className="large"
+                onClick={() => dispatch(PlayerActions.play())}
+              >
                 <div className="control">
                   <Spoticon name="play" size={SM_ICON} />
                 </div>
@@ -163,20 +196,32 @@ function Playbar (props: PlaybarProps) {
             <Button onClick={() => dispatch(PlayerActions.next())}>
               <Spoticon name="next" size={SM_ICON} />
             </Button>
-            <Button className={repeatState !== 0 && 'active'} onClick={handleRepeat}>
+            <Button
+              className={clsx({ active: repeatState })}
+              onClick={handleRepeat}
+            >
               <div className="dot" />
               {repeatState === 0 && <Spoticon name="repeat" size={SM_ICON} />}
               {repeatState === 1 && <Spoticon name="repeat" size={SM_ICON} />}
-              {repeatState === 2 && <Spoticon name="repeat-one" size={SM_ICON} />}
+              {repeatState === 2 && (
+                <Spoticon name="repeat-one" size={SM_ICON} />
+              )}
             </Button>
           </div>
           <div className="progress-slider">
             <div className="time progress">{positionShown || position}</div>
+            {/* @ts-expect-error */}
             <Slider
               min={0}
               max={1000}
-              onChange={(event, value) => dispatch(PlayerActions.handlePosition(value / 1000))}
-              onChangeCommitted={(event, value) => dispatch(PlayerActions.setPosition(value / 1000))}
+              onChange={(event, value) =>
+                // @ts-expect-error
+                dispatch(PlayerActions.handlePosition(value / 1000))
+              }
+              onChangeCommitted={(event, value) =>
+                // @ts-expect-error
+                dispatch(PlayerActions.setPosition(value / 1000))
+              }
               value={progress}
             />
             <div className="time">{duration}</div>
@@ -190,21 +235,36 @@ function Playbar (props: PlaybarProps) {
             <Spoticon name="devices" size={18} />
           </button>
           <button style={{ marginLeft: 16 }} onClick={() => setMuted(!muted)}>
-            {(volume === 0 || muted) && <Spoticon name="volume-off" size={18} />}
-            {(volume > 0 && !muted && volume <= 30) && <Spoticon name="volume-low" size={18} />}
-            {(volume > 30 && !muted && volume <= 60) && <Spoticon name="volume-medium" size={18} />}
-            {(volume > 60 && !muted && volume <= 100) && <Spoticon name="volume-high" size={18} />}
+            {(volume === 0 || muted) && (
+              <Spoticon name="volume-off" size={18} />
+            )}
+            {volume > 0 && !muted && volume <= 30 && (
+              <Spoticon name="volume-low" size={18} />
+            )}
+            {volume > 30 && !muted && volume <= 60 && (
+              <Spoticon name="volume-medium" size={18} />
+            )}
+            {volume > 60 && !muted && volume <= 100 && (
+              <Spoticon name="volume-high" size={18} />
+            )}
           </button>
           <div className="volume-slider">
+            {/* @ts-expect-error */}
             <Slider
               min={0}
               max={100}
-              onChange={(event, value) => dispatch(PlayerActions.setVolume(value))}
+              onChange={(event, value) =>
+                dispatch(PlayerActions.setVolume(value))
+              }
               value={muted ? 0 : volume}
             />
           </div>
-          <button>
-            <Spoticon name="expand" size={18} />
+          <button onClick={() => toggleFullscreen()}>
+            {isFullscreen ? (
+              <Spoticon name="compress" size={18} />
+            ) : (
+              <Spoticon name="expand" size={18} />
+            )}
           </button>
         </SideControls>
       </Container>
@@ -212,7 +272,7 @@ function Playbar (props: PlaybarProps) {
         open={authorMenuOpen}
         position={authorMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
           handleClickAway()
         }}
@@ -221,7 +281,7 @@ function Playbar (props: PlaybarProps) {
         open={titleMenuOpen}
         position={titleMenuPos}
         onClickAway={handleClickAway}
-        onContext={(e) => {
+        onContext={(e: any) => {
           handleContextMenu(e)
           handleClickAway()
         }}

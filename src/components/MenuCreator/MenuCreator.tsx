@@ -1,17 +1,17 @@
 // @ts-nocheck
 import React from 'react'
 
-import { Divider, MenuList, Popover } from '@material-ui/core'
+import { MenuList, Popover } from '@material-ui/core'
 import MenuItem from '~/components/MenuItem'
 
 type MenuAuthorProps = {
-  open: Boolean,
-  position: Object,
-  onClickAway: Function,
+  open: Boolean
+  position: Object
+  onClickAway: Function
   onContext: Function
 }
 
-function MenuCreator (props: MenuAuthorProps) {
+function MenuCreator(props: MenuAuthorProps) {
   const { open, position, onClickAway, onContext } = props
 
   return (
@@ -21,13 +21,13 @@ function MenuCreator (props: MenuAuthorProps) {
       anchorPosition={position}
       anchorOrigin={{
         vertical: 'top',
-        horizontal: 'left'
+        horizontal: 'left',
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'left'
+        horizontal: 'left',
       }}
-      onBackdropClick={onClickAway}
+      onClose={onClickAway}
       onContextMenu={onContext}
     >
       <MenuList>

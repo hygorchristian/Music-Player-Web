@@ -1,8 +1,8 @@
 // @ts-nocheck
 
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container = styled.div<{ itemsPerRow: number }>`
   width: ${({ width }) => width}px;
   padding: 32px;
   display: grid;

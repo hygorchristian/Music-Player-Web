@@ -1,12 +1,11 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
-import Home from '~/screens/Home'
-import Playlist from '~/screens/Playlist'
-import Albums from '~/screens/Albums'
 import AlbumDetail from '~/screens/AlbumDetail'
+import Albums from '~/screens/Albums'
 import ArtistDetail from '~/screens/ArtistDetail'
 import Artists from '~/screens/Artists'
+import Playlist from '~/screens/Playlist'
 
 function Routes () {
   return (

@@ -27,15 +27,15 @@ function FindFriends (props: FindFriendsProps) {
           <span>Developed with </span>
           <Spoticon name="heart-solid" size={16} color="white" />
           <span> by </span>
-          <a href="https://github.com/rushy06" target="_blank">Hygor Dias</a>
+          <a href="https://github.com/hygorchristian" target="_blank">Hygor Dias</a>
         </h2>
-        <a className="button" href="https://github.com/rushy06" target="_blank">
+        <a className="button" href="https://github.com/hygorchristian" target="_blank">
           <span className="label">github</span>
         </a>
         <a className="button" href="https://www.linkedin.com/in/hygor-christian" target="_blank">
           <span className="label">linkedin</span>
         </a>
-        <a className="button" href="https://github.com/rushy06/Music-Player-Web" target="_blank">
+        <a className="button" href="https://github.com/hygorchristian/Music-Player-Web" target="_blank">
           <span className="label">Source</span>
         </a>
       </div>

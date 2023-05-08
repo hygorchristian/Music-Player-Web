@@ -5,13 +5,13 @@ import { Divider, MenuList, Popover } from '@material-ui/core'
 import MenuItem from '~/components/MenuItem'
 
 type MenuAlbumProps = {
-  open: Boolean,
-  position: Object,
-  onClickAway: Function,
+  open: Boolean
+  position: Object
+  onClickAway: Function
   onContext: Function
 }
 
-function MenuAlbum (props: MenuAlbumProps) {
+function MenuAlbum(props: MenuAlbumProps) {
   const { open, position, onClickAway, onContext } = props
 
   return (
@@ -21,13 +21,13 @@ function MenuAlbum (props: MenuAlbumProps) {
       anchorPosition={position}
       anchorOrigin={{
         vertical: 'top',
-        horizontal: 'left'
+        horizontal: 'left',
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'left'
+        horizontal: 'left',
       }}
-      onBackdropClick={onClickAway}
+      onClose={onClickAway}
       onContextMenu={onContext}
     >
       <MenuList>

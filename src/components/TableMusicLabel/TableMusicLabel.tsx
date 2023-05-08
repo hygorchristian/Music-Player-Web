@@ -1,18 +1,19 @@
 // @ts-nocheck
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Container } from './styles'
-import Spoticon from '~/components/Spoticon'
+import { useDispatch } from 'react-redux'
 import ItemMusic from '~/components/ItemMusic'
-import { useDispatch, useSelector } from 'react-redux'
 import { PlayerActions } from '~/store/ducks/player'
+import { Music } from '~/types/Data'
+import { Container } from './styles'
 
 type TableMusicLabelProps = {
-
+  musics: Music[]
+  label: string
 }
 
-function TableMusicLabel ({ label, musics, ...props }: TableMusicLabelProps) {
+function TableMusicLabel({ label, musics }: TableMusicLabelProps) {
   const [rest, setRest] = useState(0)
   const [musicsShown, setMusicsShown] = useState([])
   const dispatch = useDispatch()
@@ -42,14 +43,22 @@ function TableMusicLabel ({ label, musics, ...props }: TableMusicLabelProps) {
       <table>
         <tbody>
           {musicsShown.map((music, i) => (
-            <ItemMusic key={music.key} music={music} onPlay={playSong} index={i + 1} />
+            <ItemMusic
+              key={music.id}
+              music={music}
+              onPlay={playSong}
+              index={i + 1}
+            />
           ))}
         </tbody>
       </table>
       {rest > 0 && musics.length > musicsShown.length && (
-        <button className="btn" onClick={() => {
-          setMusicsShown(musics)
-        }}>
+        <button
+          className="btn"
+          onClick={() => {
+            setMusicsShown(musics)
+          }}
+        >
           <span>Show {rest} more</span>
         </button>
       )}
@@ -58,7 +67,6 @@ function TableMusicLabel ({ label, musics, ...props }: TableMusicLabelProps) {
           <span>Show only 5 songs</span>
         </button>
       )}
-
     </Container>
   )
 }

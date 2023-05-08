@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react'
 
-import { Container } from './styles'
-import { ReactSVG } from 'react-svg'
 import { ClickAwayListener } from '@material-ui/core'
-import Switch from '~/components/Switch'
 import Spoticon from '~/components/Spoticon'
+import Switch from '~/components/Switch'
+import { Container } from './styles'
 
 type SearchBarProps = {
-
+  noDownload?: boolean
 }
 
-function SearchBar ({ noDownload, ...props }: SearchBarProps) {
+function SearchBar({ noDownload, ...props }: SearchBarProps) {
   const [filterFocus, setFilterFocus] = useState(false)
 
   return (
@@ -26,20 +25,24 @@ function SearchBar ({ noDownload, ...props }: SearchBarProps) {
         >
           <Spoticon name="search" size={16} />
           <input placeholder="Filter" />
-          {filterFocus && <button onClick={(e) => {
-            e.stopPropagation()
-            setFilterFocus(false)
-          }
-          }>
-            <Spoticon name="close" size={16} color="#ffffff" />
-          </button>}
+          {filterFocus && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setFilterFocus(false)
+              }}
+            >
+              <Spoticon name="close" size={16} color="#ffffff" />
+            </button>
+          )}
         </div>
       </ClickAwayListener>
-      {!noDownload && <div className="download">
-        <div className="label">Download</div>
-        <Switch />
-      </div>}
-
+      {!noDownload && (
+        <div className="download">
+          <div className="label">Download</div>
+          <Switch />
+        </div>
+      )}
     </Container>
   )
 }

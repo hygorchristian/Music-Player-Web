@@ -1,20 +1,21 @@
-// @ts-nocheck
-
 import React, { useEffect, useState } from 'react'
-import Player from 'react-sound'
 
-import { Container } from './styles'
+import { useDispatch } from 'react-redux'
 import Spoticon from '~/components/Spoticon/Spoticon'
-import { useDispatch, useSelector } from 'react-redux'
-import { PlayerActions } from '~/store/ducks/player'
+import { useAppSelector } from '~/store'
+import { PlayerActions, playerStatus } from '~/store/ducks/player'
+import { Music } from '~/types/Data'
+import { Container } from './styles'
 
 type ItemMusicProps = {
-
+  music: Music
+  onPlay: (music: Music) => void
+  index: number
 }
 
-function ItemMusic ({ music, onPlay, index, ...props }: ItemMusicProps) {
+function ItemMusic({ music, onPlay, index }: ItemMusicProps) {
   const [isPlaying, setPlaying] = useState(false)
-  const { currentSong, status } = useSelector(({ player }) => player)
+  const { currentSong, status } = useAppSelector(({ player }) => player)
   const dispatch = useDispatch()
 
   const handlePause = () => {
@@ -22,14 +23,20 @@ function ItemMusic ({ music, onPlay, index, ...props }: ItemMusicProps) {
   }
 
   useEffect(() => {
-    setPlaying(currentSong && currentSong.id === music.id && status === Player.status.PLAYING)
+    setPlaying(
+      currentSong &&
+        currentSong.id === music.id &&
+        status === playerStatus.PLAYING
+    )
   }, [status, currentSong, music])
 
+  if (!music) return null
+
   return (
-    <Container className={isPlaying && 'playing'}>
+    <Container className={isPlaying ? 'playing' : ''}>
       <td style={{ width: 40 }}>
         <div className="image">
-          <img src={music.album.cover.downloadURL} />
+          <img src={music?.album?.cover_image} />
         </div>
       </td>
       <td style={{ width: 44 }}>
