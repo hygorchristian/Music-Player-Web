@@ -104,7 +104,8 @@
     "json-server": "^0.16.0",
     "progress-estimator": "^0.3.1",
     "react-app-rewired": "^2.1.5",
-    "youtube-dl-exec": "^2.4.1"
+    "youtube-dl-exec": "^2.4.1",
+    "youtube-search-api": "^1.1.1"
   },
   "config": {
     "commitizen": {
