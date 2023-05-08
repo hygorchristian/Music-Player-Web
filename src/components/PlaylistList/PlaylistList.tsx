@@ -42,8 +42,6 @@ function PlaylistList() {
     api.getPlaylists()
   )
 
-  console.log(playlists)
-
   const selectMenu = (name: string) => {
     dispatch(AppActions.setMenuSelected(`@playlist/${name}`))
     history.push(`/playlist/${name}`)
@@ -67,8 +65,6 @@ function PlaylistList() {
   }
 
   if (isLoading || !playlists) return null
-
-  console.log({ playlists })
 
   return (
     <>

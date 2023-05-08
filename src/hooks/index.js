@@ -1,9 +1,12 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
-export function useWindowSize () {
-  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
+export function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  })
   useLayoutEffect(() => {
-    function updateSize () {
+    function updateSize() {
       setSize({ width: window.innerWidth, height: window.innerHeight })
     }
     window.addEventListener('resize', updateSize)
@@ -13,7 +16,7 @@ export function useWindowSize () {
   return size
 }
 
-export function useScrollProps () {
+export function useScrollProps() {
   const [props, setProps] = useState({ top: 0 })
 
   useEffect(() => {
@@ -21,8 +24,7 @@ export function useScrollProps () {
 
     if (!elem) return
 
-    elem.onscroll(e => {
-      console.log(e)
+    elem.onscroll((e) => {
       // console.log(e)
     })
     setProps({ top: elem.offsetTop })
@@ -31,7 +33,7 @@ export function useScrollProps () {
   return props
 }
 
-export function useTabletMode () {
+export function useTabletMode() {
   const { width } = useWindowSize()
   const [props, setProps] = useState({ isTablet: width < 1190 })
 

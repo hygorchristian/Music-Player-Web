@@ -10,8 +10,8 @@ const random = (min: number, max: number): number =>
 
 export default class LocalApi implements ApiInterface {
   private readonly s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
     region: 'us-west-2', // e.g., 'us-east-1'
   })
 
@@ -137,7 +137,6 @@ export default class LocalApi implements ApiInterface {
       Music: musics,
     })
     const viewModelBuilder = ioc.use('viewModels.album')
-    console.log({ albumData })
 
     return viewModelBuilder(albumData)
   }
