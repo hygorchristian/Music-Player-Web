@@ -3,17 +3,58 @@ import * as AWS from 'aws-sdk'
 import ioc from '~/lib/ioc'
 import { Album, Artist, Music, Playlist } from '~/types/Data'
 import { ApiInterface } from '../ApiInterface'
-import data from './data.json'
 
 const random = (min: number, max: number): number =>
   faker.datatype.number({ min, max })
 
+export interface DataSaved {
+  artists: {
+    id: string
+    artist_id: string
+    name: string
+    image: string // URL
+  }[]
+  albums: {
+    id: string
+    artist_id: string
+    name: string
+    image: string // URL
+  }[]
+  songs: {
+    id: string
+    name: string
+    album_id: string
+    url: string // URL to the Spotify page
+    filename: string
+    music_query: string
+    uploaded: boolean
+  }[]
+}
+
 export default class LocalApi implements ApiInterface {
+  // @ts-expect-error
+  private data: DataSaved
+
   private readonly s3 = new AWS.S3({
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
     region: 'us-west-2', // e.g., 'us-east-1'
   })
+
+  private async fetchData(): Promise<void> {
+    if (this.data) return
+
+    const url = this.s3.getSignedUrl('getObject', {
+      Bucket: 'musics.hygorchristian',
+      Key: 'data.json',
+      Expires: 1000,
+    })
+
+    const data = await fetch(url).then((res) => res.json())
+    console.log(data)
+
+    this.data = data as DataSaved
+  }
 
   private getAwsSongUrl(filename: string): string {
     const url = this.s3.getSignedUrl('getObject', {
@@ -26,7 +67,7 @@ export default class LocalApi implements ApiInterface {
   }
 
   private getMusicById(id: string): Music | undefined {
-    const foundItem = data.songs.find((item) => item.id === id)
+    const foundItem = this.data.songs.find((item) => item.id === id)
 
     if (!foundItem) return
 
@@ -43,7 +84,7 @@ export default class LocalApi implements ApiInterface {
   }
 
   private getArtistById(id: string): Artist | undefined {
-    const foundItem = data.artists.find((item) => item.id === id)
+    const foundItem = this.data.artists.find((item) => item.id === id)
 
     if (!foundItem) return
 
@@ -58,7 +99,7 @@ export default class LocalApi implements ApiInterface {
   }
 
   private getAlbumById(id: string): Album | undefined {
-    const foundItem = data.albums.find((item) => item.id === id)
+    const foundItem = this.data.albums.find((item) => item.id === id)
 
     if (!foundItem) return
 
@@ -76,7 +117,9 @@ export default class LocalApi implements ApiInterface {
   }
 
   async getAlbums(): Promise<Album[]> {
-    const rawData = data.albums.map((album) => ({
+    await this.fetchData()
+
+    const rawData = this.data.albums.map((album) => ({
       id: album.id,
       name: album.name,
       cover_image: album.image,
@@ -90,7 +133,9 @@ export default class LocalApi implements ApiInterface {
   }
 
   async getArtists(): Promise<Artist[]> {
-    const rawData = data.artists.map((artist) => ({
+    await this.fetchData()
+
+    const rawData = this.data.artists.map((artist) => ({
       id: artist.id,
       name: artist.name,
       artist_image: artist.image,
@@ -103,6 +148,8 @@ export default class LocalApi implements ApiInterface {
   }
 
   async getPlaylists(): Promise<Playlist[]> {
+    await this.fetchData()
+
     return []
   }
 
@@ -122,7 +169,7 @@ export default class LocalApi implements ApiInterface {
       Artist: this.getArtistById(album.artist_id),
     }
 
-    const musics = data.songs
+    const musics = this.data.songs
       .filter((s) => s.album_id === id)
       .map((s) => ({
         ...this.getMusicById(s.id),
@@ -142,10 +189,13 @@ export default class LocalApi implements ApiInterface {
   }
 
   async getMusic(id: string): Promise<Music> {
+    await this.fetchData()
     throw new Error('Method not implemented.')
   }
 
   async getArtist(id: string): Promise<Artist> {
+    await this.fetchData()
+
     const artist = this.getArtistById(id)
 
     if (!artist) return {} as Artist
@@ -156,7 +206,7 @@ export default class LocalApi implements ApiInterface {
       artist_image: artist.artist_image,
     }
 
-    const albums = data.albums
+    const albums = this.data.albums
       .filter((a) => a.artist_id === id)
       .map((a) => ({
         ...this.getAlbumById(a.id),
@@ -165,7 +215,7 @@ export default class LocalApi implements ApiInterface {
         },
       }))
 
-    const musics = data.songs
+    const musics = this.data.songs
       .filter((s) => albums.some((a) => a.id === s.album_id))
       .map((s) => ({
         ...this.getMusicById(s.id),
@@ -192,6 +242,7 @@ export default class LocalApi implements ApiInterface {
   }
 
   async getPlaylist(id: string): Promise<Playlist> {
+    await this.fetchData()
     throw new Error('Method not implemented.')
   }
 }
