@@ -1,13 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
-
-@font-face {
-    font-family: "spoticon";
-    src: url("/fonts/spoticon.ttf") format("ttf");
-    src: url("/fonts/spoticon.woff2") format("woff2");
-  }
-
   @font-face {
     font-family: "proxima-nova";
     src: url("/fonts/proxima-nova.otf") format("otf");
@@ -19,12 +12,12 @@ export default createGlobalStyle`
     box-sizing: border-box;
     outline: 0;
   }
-  
+
   html, body, #root{
     height: 100%;
     min-width: 800px;
   }
-  
+
   body{
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
@@ -33,8 +26,8 @@ export default createGlobalStyle`
     background: #181818;
     color: #ffffff;
     user-select: none;
-  }  
-  
+  }
+
   button{
     display: flex;
     flex-direction: row;
@@ -42,5 +35,5 @@ export default createGlobalStyle`
     justify-content: center;
     background-color: transparent;
     border: none;
-  }  
+  }
 `
