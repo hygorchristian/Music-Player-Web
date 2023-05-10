@@ -13,9 +13,10 @@ import { Container } from './styles'
 type ItemPlaylistProps = {
   music: Music
   onPlay: (music: Music) => void
+  index: number
 }
 
-function ItemPlaylist({ music, onPlay }: ItemPlaylistProps) {
+function ItemPlaylist({ music, onPlay, index }: ItemPlaylistProps) {
   const [fav, setFav] = useState(false)
   const { currentSong, status } = useAppSelector(({ player }) => player)
   const dispatch = useDispatch()
@@ -65,6 +66,9 @@ function ItemPlaylist({ music, onPlay }: ItemPlaylistProps) {
             style={{ lineHeight: '40px' }}
           />
         )}
+      </td>
+      <td className="text">
+        <span className="number">{index}</span>
       </td>
       <td className="text">
         <span className="title">{music.name}</span>

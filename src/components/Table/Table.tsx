@@ -73,8 +73,13 @@ function Table({ musics }: TableProps) {
           </tr>
         </thead>
         <tbody>
-          {(musics || []).map((music) => (
-            <ItemPlaylist key={music.id} music={music} onPlay={handlePlay} />
+          {(musics || []).map((music, index) => (
+            <ItemPlaylist
+              key={music.id}
+              music={music}
+              onPlay={handlePlay}
+              index={index + 1}
+            />
           ))}
         </tbody>
       </table>
