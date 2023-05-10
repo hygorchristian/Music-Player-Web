@@ -42,6 +42,7 @@ function Table({ musics }: TableProps) {
           <tr>
             <th style={{ width: 52 }}></th>
             <th style={{ width: 44 }}></th>
+            <th style={{ width: 20 }}>#</th>
             <th style={{ width: 300 }}>Title</th>
             <th style={{ width: 300 }}>Artist</th>
             <th style={{ width: 160 }}>Album</th>
@@ -60,6 +61,7 @@ function Table({ musics }: TableProps) {
           <tr>
             <th style={{ width: 52 }}></th>
             <th style={{ width: 44 }}></th>
+            <th style={{ width: 20 }}>#</th>
             <th style={{ width: 300 }}>Title</th>
             <th style={{ width: 300 }}>Artist</th>
             <th style={{ width: 160 }}>Album</th>
