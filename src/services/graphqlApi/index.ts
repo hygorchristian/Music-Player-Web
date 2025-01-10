@@ -23,27 +23,21 @@ export default class GraphqlApi implements ApiInterface {
   private query<T>(q: string, variables: Record<string, any> = {}): Promise<T> {
     return this.api
       .post('graphql', { query: q, variables })
-      .then((r) => r.data.data as T)
+      .then((r: any) => r.data.data as T)
   }
 
-  public async getAlbums(): Promise<Album[]> {
+  public async getAlbums() {
     const result = await this.query<{ allAlbums: any[] }>(allAlbums)
-    const albumAdapter = ioc.use('adapters.album')
-    const albumsData = (result?.allAlbums ?? []).map((data: any) =>
-      albumAdapter(data)
-    )
-    const viewModelBuilder = ioc.use('viewModels.album')
-    return albumsData.map(viewModelBuilder)
+    return (result?.allAlbums ?? [])
+      .map(ioc.use('adapters.album'))
+      .map(ioc.use('viewModels.album'))
   }
 
-  public async getArtists(): Promise<Artist[]> {
-    const result = await this.query<{ allArtists: any[] }>(allArtists)
-    const artistAdapter = ioc.use('adapters.artist')
-    const artistData = (result?.allArtists ?? []).map((data: any) =>
-      artistAdapter(data)
-    )
-    const viewModelBuilder = ioc.use('viewModels.artist')
-    return artistData.map(viewModelBuilder)
+  public async getArtists() {
+    return await this.query<{ allArtists: any[] }>(allArtists)
+      .then(result => (result?.allArtists ?? [])
+      .map(ioc.use('adapters.artist'))
+      .map(ioc.use('viewModels.artist')))
   }
 
   public async getAlbum(id: string): Promise<Album> {
